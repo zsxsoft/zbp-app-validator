@@ -1,0 +1,25 @@
+{
+    "name": "zsxsoft/zbp-app-validator",
+    "description": "Z-BlogPHP App Validator",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "zsx",
+            "email": "zsx@zsxsoft.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "zsxsoft/php-w3c-validator": "^17.11",
+        "symfony/console": "^3.3",
+        "monolog/monolog": "^1.23",
+        "bramus/monolog-colored-line-formatter": "~2.0",
+        "guzzlehttp/guzzle": "^6.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Zsxsoft\\AppValidator\\": "validator/"
+        }
+    }
+}
