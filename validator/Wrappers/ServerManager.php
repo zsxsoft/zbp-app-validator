@@ -11,6 +11,7 @@ namespace Zsxsoft\AppValidator\Wrappers;
 use Zsxsoft\AppValidator\Helpers\Logger;
 use Zsxsoft\AppValidator\Helpers\StaticInstance;
 use Zsxsoft\AppValidator\Helpers\TempHelper;
+use Zsxsoft\AppValidator\Helpers\ZBPHelper;
 
 class ServerManager
 {
@@ -46,7 +47,7 @@ class ServerManager
                 1 => ['file', TempHelper::getPath('/server-output.txt'), 'w'],
                 2 => ['file', TempHelper::getPath('/server-error.txt'), 'w'],
             ],
-            $pipes, ZBPInstaller::getWebPath(), NULL,
+            $pipes, ZBPHelper::getPath(), NULL,
             [
                 'bypass_shell' => true
             ]

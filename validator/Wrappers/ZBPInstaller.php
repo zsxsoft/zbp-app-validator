@@ -13,6 +13,7 @@ use Zsxsoft\AppValidator\Helpers\Logger;
 use Zsxsoft\AppValidator\Helpers\PathHelper;
 use Zsxsoft\AppValidator\Helpers\StaticInstance;
 use Zsxsoft\AppValidator\Helpers\TempHelper;
+use Zsxsoft\AppValidator\Helpers\ZBPHelper;
 
 
 class ZBPInstaller
@@ -29,15 +30,9 @@ class ZBPInstaller
     {
         $this->xmlPath = TempHelper::getPath('/zblogphp.xml');
         $this->gitPath = TempHelper::getPath('/git');
+        $this->webPath = ZBPHelper::getPath();
         if (is_dir(TempHelper::getPath('/git/.git'))) {
             $this->git = true;
-        }
-
-        $zbpPath = Config::get('zbpPath');
-        if ($zbpPath == false) {
-            $this->webPath = TempHelper::getPath('/web');
-        } else {
-            $this->webPath = $zbpPath;
         }
     }
 

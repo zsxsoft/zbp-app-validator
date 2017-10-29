@@ -8,9 +8,17 @@
 
 namespace Zsxsoft\AppValidator\Wrappers;
 
+use Zsxsoft\AppValidator\Helpers\Logger;
 use Zsxsoft\AppValidator\Helpers\StaticInstance;
 use Zsxsoft\AppValidator\Helpers\TempHelper;
+use Zsxsoft\AppValidator\Helpers\ZBPHelper;
 
+/**
+ * Class ZBPWrapper
+ * @package Zsxsoft\AppValidator\Wrappers
+ * @method static getApp()
+ * @method static getZbp()
+ */
 class ZBPWrapper
 {
     use StaticInstance;
@@ -20,9 +28,24 @@ class ZBPWrapper
     public function __construct()
     {
         global $zbp;
-        require TempHelper::getPath('/web/zb_system/function/c_system_base.php');
+        require ZBPHelper::getPath('/zb_system/function/c_system_base.php');
         $this->zbp = $zbp;
         $zbp->Load();
+    }
+
+    protected function loadApp($appId)
+    {
+        $zbp = $this->zbp;
+        $app = $zbp->LoadApp('plugin', $appId);
+        if (is_null($app->id)) {
+            $app = $zbp->LoadApp('theme', $appId);
+        }
+        if (is_null($app->id)) {
+            Logger::error("Load $appId failed!");
+            exit;
+        }
+        $this->app = $app;
+        return $app;
     }
 
     protected function installApp($filePath)

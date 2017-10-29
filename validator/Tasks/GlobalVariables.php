@@ -9,6 +9,8 @@
 namespace Zsxsoft\AppValidator\Tasks;
 
 use Zsxsoft\AppValidator\Helpers\Logger;
+use Zsxsoft\AppValidator\Helpers\PHPHelper;
+use Zsxsoft\AppValidator\Wrappers\ZBPWrapper;
 
 class GlobalVariables
 {
@@ -44,20 +46,20 @@ class GlobalVariables
      */
     public function checkFunctions($diff)
     {
-        global $app;
+
+        $app = ZBPWrapper::getApp();
         Logger::info('Testing functions');
         $regex = str_replace("!!", $app->id, "/^(activeplugin_|installplugin_|uninstallplugin_)!!$|^!!_|^!!$|_!!$/si");
         //var_dump($diff);exit;
         foreach ($diff as $index => $name) {
             if (preg_match($regex, $name)) {
-                Logger::info('Tested function: ' . $name);
+                Logger::info("Tested function: $name");
             } else {
-                Logger::error('Sub-standard function: ' . $name, false);
-                if ($ret = Utils::getFunctionDescription($name)) {
+                Logger::error("Illegal function name: $name", false);
+                if ($ret = PHPHelper::getFunctionDescription($name)) {
                     Logger::error("In " . $ret->getFileName(), false);
-                    Logger::error("Line " . ($ret->getStartLine() - 1) . " To " . ($ret->getEndLine() - 1), false);
+                    Logger::error("Line " . ($ret->getStartLine() - 1) . " To " . ($ret->getEndLine() - 1));
                 }
-                Logger::error("Exited");
             }
         }
     }
@@ -70,7 +72,8 @@ class GlobalVariables
      */
     public function checkOthers($class, $diff)
     {
-        global $app;
+
+        $app = ZBPWrapper::getApp();
         Logger::info('Testing ' . $class);
         $regex = str_replace("!!", $app->id, "/^!!_?/si");
         foreach ($diff as $index => $name) {
@@ -105,10 +108,12 @@ class GlobalVariables
      */
     public function run()
     {
-        global $zbp;
-        global $app;
+        $zbp = ZBPWrapper::getZbp();
+        $app = ZBPWrapper::getApp();
+        new PHPHelper(); // Include the helper to prevent sub-standard warning
 
         Logger::info('Scanning functions and global variables');
+        $filename = $zbp->path . '/zb_users/' . $app->type . '/' . $app->id . '/include.php';
         $this->loadGlobals('variables', function () {
             return array_keys($GLOBALS);
         });
@@ -118,17 +123,16 @@ class GlobalVariables
         $this->loadGlobals('constants', function () {
             return array_keys(get_defined_constants());
         });
-        $this->loadGlobals('classes__', function () {
+        $this->loadGlobals('classes', function () {
             return get_declared_classes();
         });
-        $filename = $zbp->path . '/zb_users/' . $app->type . '/' . $app->id . '/include.php';
 
-        $includeFlag = Utils::includeFile($filename);
+        $includeFlag = PHPHelper::includeFile($filename);
         if ($includeFlag === true) {
             if (!is_readable($filename)) {
                 Logger::info('No include file.');
             } else {
-                Log::warning('You\'d better disable this app before check.');
+                Logger::warning('You\'d better disable this app before check.');
             }
             return;
         }
@@ -136,6 +140,6 @@ class GlobalVariables
         $this->checkDiff('variables');
         $this->checkDiff('functions');
         $this->checkDiff('constants');
-        $this->checkDiff('classes__');
+        $this->checkDiff('classes');
     }
 }
