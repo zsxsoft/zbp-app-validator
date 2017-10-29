@@ -2,5 +2,9 @@
   "host": "http://127.0.0.1:46214/",
   "builtinServer": true,
   "listenAddress": "127.0.0.1:46214",
-  "zbpPath": false
+  "zbpPath": false,
+  "validateUrls": [
+    "",
+    "?id=3"
+  ]
 }
