@@ -99,6 +99,9 @@ class ZBPInstaller
             Logger::info('Using latest stable Z-BlogPHP');
         }
         $this->extract();
+
+        PathHelper::rcopy(PathHelper::getAbsoluteFilename(ROOT_PATH . '/resources/zb_users'), $this->webPath . '/zb_users');
+
         Logger::info('Cleaned successfully');
     }
 
