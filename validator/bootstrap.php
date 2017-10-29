@@ -8,6 +8,7 @@
 namespace AppChecker;
 
 use Symfony\Component\Console\Application;
+use Zsxsoft\AppValidator\Commands\EndProject;
 use Zsxsoft\AppValidator\Commands\ExtractApp;
 use Zsxsoft\AppValidator\Helpers\Logger;
 use Zsxsoft\AppValidator\Helpers\TempHelper;
@@ -17,6 +18,7 @@ use Zsxsoft\AppValidator\Commands\StartProject;
 
 $application = new Application();
 $application->add(new StartProject());
+$application->add(new EndProject());
 $application->add(new ExtractApp());
 $application->run();
 

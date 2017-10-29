@@ -23,7 +23,6 @@ class TempHelper
     protected function createTemp()
     {
         @mkdir($this->path);
-        @mkdir($this->path . DIRECTORY_SEPARATOR . 'web');
     }
 
     protected function getPath($path)

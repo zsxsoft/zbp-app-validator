@@ -22,10 +22,18 @@ trait StaticInstance
         if (is_null(self::$_instance)) {
             self::_initializeThis();
         }
+        if (strtolower(substr($name, 0, 3)) == 'get' && !method_exists(self::$_instance, $name)) {
+            return self::$_instance->get(lcfirst(substr($name, 3)));
+        }
         return call_user_func_array([self::$_instance, $name], $arguments);
     }
 
     public static function instance () {
         return self::$_instance;
     }
+
+    protected function get ($key) {
+        return $this->$key;
+    }
+
 }

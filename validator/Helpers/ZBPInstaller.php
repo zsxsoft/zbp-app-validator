@@ -25,9 +25,15 @@ class ZBPInstaller
     {
         $this->xmlPath = TempHelper::getPath('/zblogphp.xml');
         $this->gitPath = TempHelper::getPath('/git');
-        $this->webPath = TempHelper::getPath('/web');
         if (is_dir(TempHelper::getPath('/git/.git'))) {
             $this->git = true;
+        }
+
+        $zbpPath = Config::get('zbpPath');
+        if ($zbpPath == false) {
+            $this->webPath = TempHelper::getPath('/web');
+        } else {
+            $this->webPath = $zbpPath;
         }
     }
 
@@ -68,6 +74,7 @@ class ZBPInstaller
         $webPath = $this->webPath;
         PathHelper::rrmdir($webPath);
         TempHelper::createTemp();
+        @mkdir($webPath);
 
         if ($this->isUsingGit()) {
             PathHelper::rcopy($this->gitPath, $webPath);

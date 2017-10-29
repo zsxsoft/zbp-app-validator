@@ -33,15 +33,17 @@ class ServerManager
 
     protected function start()
     {
+        if (!Config::get('builtinServer')) return;
         $this->stop();
         $pipes = [];
-        $proc = proc_open('php -S ' . SERVER_LISTEN_ADDRESS,
+        $listenAddress = Config::get('listenAddress');
+        $proc = proc_open('php -S ' . $listenAddress,
             [
                 0 => ["pipe", "r"],
                 1 => ['file', TempHelper::getPath('/server-output.txt'), 'w'],
                 2 => ['file', TempHelper::getPath('/server-error.txt'), 'w'],
             ],
-            $pipes, TempHelper::getPath('/web'), NULL,
+            $pipes, ZBPInstaller::getWebPath(), NULL,
             [
                 'bypass_shell' => true
             ]
@@ -52,13 +54,14 @@ class ServerManager
         }
         $status = proc_get_status($proc);
         $pid = $status['pid'];
-        Logger::info("Started PHP Server(PID=${pid}) at " . SERVER_LISTEN_ADDRESS);
+        Logger::info("Started PHP Server(PID=${pid}) at $listenAddress");
         $this->pid = $pid;
         file_put_contents($this->pidPath, $pid);
     }
 
     protected function stop()
     {
+        if (!Config::get('builtinServer')) return;
         $this->loadPid();
         if ($this->pid == '') return;
         if (function_exists('posix_kill')) {

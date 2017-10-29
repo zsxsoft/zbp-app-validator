@@ -14,7 +14,6 @@ if (!is_readable('vendor/autoload.php')) {
 }
 
 define('ROOT_PATH', dirname(__FILE__));
-define('SERVER_LISTEN_ADDRESS', '127.0.0.1:46214');
 
 require 'vendor/autoload.php';
 require './validator/bootstrap.php';
