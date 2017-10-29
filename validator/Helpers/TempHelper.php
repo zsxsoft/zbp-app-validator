@@ -8,7 +8,6 @@
 
 namespace Zsxsoft\AppValidator\Helpers;
 
-
 class TempHelper
 {
     use StaticInstance;

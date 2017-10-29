@@ -6,13 +6,16 @@
  * Time: 16:59
  */
 
-namespace Zsxsoft\AppValidator\Helpers;
+namespace Zsxsoft\AppValidator\Wrappers;
 
+use Zsxsoft\AppValidator\Helpers\StaticInstance;
+use Zsxsoft\AppValidator\Helpers\TempHelper;
 
-class ZBPHelper
+class ZBPWrapper
 {
     use StaticInstance;
     protected $zbp = null;
+    protected $app = null;
 
     public function __construct()
     {

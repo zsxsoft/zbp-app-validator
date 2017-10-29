@@ -6,8 +6,10 @@
  * Time: 10:47
  */
 
-namespace Zsxsoft\AppValidator\Helpers;
+namespace Zsxsoft\AppValidator\Wrappers;
 
+use Zsxsoft\AppValidator\Helpers\Logger;
+use Zsxsoft\AppValidator\Helpers\StaticInstance;
 
 class Config
 {

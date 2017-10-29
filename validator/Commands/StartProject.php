@@ -12,9 +12,9 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Zsxsoft\AppValidator\Helpers\Logger;
-use Zsxsoft\AppValidator\Helpers\ServerManager;
 use Zsxsoft\AppValidator\Helpers\TempHelper;
-use Zsxsoft\AppValidator\Helpers\ZBPInstaller;
+use Zsxsoft\AppValidator\Wrappers\ServerManager;
+use Zsxsoft\AppValidator\Wrappers\ZBPInstaller;
 
 class StartProject extends Command
 {

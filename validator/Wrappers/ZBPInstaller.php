@@ -6,9 +6,13 @@
  * Time: 11:11
  */
 
-namespace Zsxsoft\AppValidator\Helpers;
+namespace Zsxsoft\AppValidator\Wrappers;
 
 use GuzzleHttp\Client;
+use Zsxsoft\AppValidator\Helpers\Logger;
+use Zsxsoft\AppValidator\Helpers\PathHelper;
+use Zsxsoft\AppValidator\Helpers\StaticInstance;
+use Zsxsoft\AppValidator\Helpers\TempHelper;
 
 
 class ZBPInstaller
