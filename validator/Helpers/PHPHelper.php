@@ -69,30 +69,6 @@ class PHPHelper
         }
     }
 
-    public static function scanDirectory($path, $recursive = true, $returnType = "getPathName")
-    {
-        $ret = [];
-
-        if ($recursive) {
-            $dir = new \RecursiveDirectoryIterator($path);
-            $iterator = new \RecursiveIteratorIterator($dir, \RecursiveIteratorIterator::SELF_FIRST);
-        } else {
-            $iterator = new \DirectoryIterator($path);
-        }
-
-        foreach ($iterator as $name => $object) {
-            $fileName = $object->getFilename();
-            if ($fileName == "." || $fileName == "..") {
-                continue;
-            }
-
-            if (!$object->isDir()) {
-                array_push($ret, $object->$returnType());
-            }
-        }
-
-        return $ret;
-    }
 
     public static function checkCanBeString($obj)
     {

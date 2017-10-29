@@ -15,7 +15,8 @@
         "symfony/console": "^3.3",
         "monolog/monolog": "^1.23",
         "bramus/monolog-colored-line-formatter": "~2.0",
-        "guzzlehttp/guzzle": "^6.3"
+        "guzzlehttp/guzzle": "^6.3",
+        "nikic/php-parser": "^3.1"
     },
     "autoload": {
         "psr-4": {

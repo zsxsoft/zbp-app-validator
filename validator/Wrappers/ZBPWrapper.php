@@ -16,13 +16,19 @@ use Zsxsoft\AppValidator\Helpers\ZBPHelper;
 /**
  * Class ZBPWrapper
  * @package Zsxsoft\AppValidator\Wrappers
- * @method static getApp()
- * @method static getZbp()
+ * @method static \App getApp()
+ * @method static \ZBlogPHP getZbp()
  */
 class ZBPWrapper
 {
     use StaticInstance;
+    /**
+     * @var \ZBlogPHP
+     */
     protected $zbp = null;
+    /**
+     * @var \App
+     */
     protected $app = null;
 
     public function __construct()
@@ -66,4 +72,16 @@ class ZBPWrapper
         return (\App::UnPack($xmlData)) ? $appId : false;
     }
 
+
+    protected function changeTheme()
+    {
+        \SetTheme($this->app->id, array_keys($this->app->GetCssFiles())[0]);
+        $this->zbp->BuildModule();
+        $this->zbp->SaveCache();
+        Logger::info('Compiling Theme..');
+        // @TODO Maybe a ZBP's bug
+        $this->zbp->template->SetPath($this->zbp->usersdir . 'cache/compiled/' . $this->app->id . '/');
+        $this->zbp->CheckTemplate(false, true);
+        Logger::info("Theme changed to {$this->app->id}");
+    }
 }

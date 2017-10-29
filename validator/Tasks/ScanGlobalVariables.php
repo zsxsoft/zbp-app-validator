@@ -12,7 +12,7 @@ use Zsxsoft\AppValidator\Helpers\Logger;
 use Zsxsoft\AppValidator\Helpers\PHPHelper;
 use Zsxsoft\AppValidator\Wrappers\ZBPWrapper;
 
-class GlobalVariables
+class ScanGlobalVariables
 {
 
     private $store = [];

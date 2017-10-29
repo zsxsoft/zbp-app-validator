@@ -14,17 +14,17 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Zsxsoft\AppValidator\Helpers\Logger;
 use Zsxsoft\AppValidator\Helpers\TempHelper;
-use Zsxsoft\AppValidator\Tasks\GlobalVariables;
+use Zsxsoft\AppValidator\Tasks\ScanGlobalVariables;
 use Zsxsoft\AppValidator\Wrappers\ZBPWrapper;
 
-class CheckGlobalVariables extends Command
+class ChangeTheme extends Command
 {
 
     protected function configure()
     {
         $this
-            ->setName('check name')
-            ->setDescription('Check name of global variables of app')
+            ->setName('theme:change')
+            ->setDescription('Change current theme to appId')
             ->addArgument(
                 'appId',
                 InputArgument::REQUIRED,
@@ -35,7 +35,8 @@ class CheckGlobalVariables extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $appId = $input->getArgument("appId");
-        ZBPWrapper::loadApp($appId);
-        (new GlobalVariables())->run();
+        $app = ZBPWrapper::loadApp($appId);
+        if ($app->type !== 'theme') return;
+        ZBPWrapper::changeTheme();
     }
 }
