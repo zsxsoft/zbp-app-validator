@@ -16,7 +16,8 @@
         "monolog/monolog": "^1.23",
         "bramus/monolog-colored-line-formatter": "~2.0",
         "guzzlehttp/guzzle": "^6.3",
-        "nikic/php-parser": "^3.1"
+        "nikic/php-parser": "^3.1",
+        "cocur/background-process": "^0.7.0"
     },
     "autoload": {
         "psr-4": {

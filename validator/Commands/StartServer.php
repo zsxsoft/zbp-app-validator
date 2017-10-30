@@ -10,24 +10,25 @@ namespace Zsxsoft\AppValidator\Commands;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Zsxsoft\AppValidator\Helpers\Logger;
 use Zsxsoft\AppValidator\Helpers\TempHelper;
 use Zsxsoft\AppValidator\Wrappers\ServerManager;
+use Zsxsoft\AppValidator\Wrappers\ZBPInstaller;
 
-class EndProject extends Command
+class StartServer extends Command
 {
 
     protected function configure()
     {
         $this
-            ->setName('project:end')
-            ->setDescription('End the started project');
+            ->setName('server:start')
+            ->setDescription('Start the builtin server');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        Logger::info('Cleaning project...');
-        ServerManager::end();
+        ServerManager::start();
     }
 }

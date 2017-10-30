@@ -10,6 +10,7 @@ namespace Zsxsoft\AppValidator\Commands;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Zsxsoft\AppValidator\Helpers\Logger;
 use Zsxsoft\AppValidator\Helpers\TempHelper;
@@ -22,8 +23,14 @@ class StartProject extends Command
     protected function configure()
     {
         $this
-            ->setName('start')
-            ->setDescription('Start a new check project');
+            ->setName('project:start')
+            ->setDescription('Clean the temporary and start a new check project')
+            ->addOption(
+              'start-server',
+              null,
+              InputOption::VALUE_OPTIONAL,
+              'Start PHP test server',
+              true);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -31,6 +38,8 @@ class StartProject extends Command
         Logger::info('Starting a new check project...');
         TempHelper::createTemp();
         ZBPInstaller::createEmptyEnvironment();
-        ServerManager::start();
+        if ($input->getOption('start-server')) {
+            ServerManager::start();
+        }
     }
 }

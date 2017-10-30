@@ -13,6 +13,8 @@ use Zsxsoft\AppValidator\Commands\ScanGlobalVariables;
 use Zsxsoft\AppValidator\Commands\EndProject;
 use Zsxsoft\AppValidator\Commands\ExtractApp;
 use Zsxsoft\AppValidator\Commands\ScanStaticCode;
+use Zsxsoft\AppValidator\Commands\StartPipe;
+use Zsxsoft\AppValidator\Commands\StartServer;
 use Zsxsoft\AppValidator\Commands\ValidateW3C;
 use Zsxsoft\AppValidator\Helpers\Logger;
 use Zsxsoft\AppValidator\Helpers\TempHelper;
@@ -27,6 +29,8 @@ $application->add(new ScanGlobalVariables());
 $application->add(new ScanStaticCode());
 $application->add(new ChangeTheme());
 $application->add(new ValidateW3C());
+$application->add(new StartServer());
+$application->add(new StartPipe());
 $application->run();
 
 /*

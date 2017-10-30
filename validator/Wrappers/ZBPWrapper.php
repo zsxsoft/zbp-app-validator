@@ -69,7 +69,11 @@ class ZBPWrapper
         $appObject = simplexml_load_string($xmlData);
         $appId = $appObject->id;
 
-        return (\App::UnPack($xmlData)) ? $appId : false;
+        if (\App::UnPack($xmlData)) {
+            file_put_contents(TempHelper::getPath('/extracted'), $appId);
+            return $appId;
+        }
+        return false;
     }
 
 
