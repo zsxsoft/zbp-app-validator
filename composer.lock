@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e83bf9f7b57c400504ceebaf7d9fb42f",
+    "content-hash": "efccf4385fd3654d5d4e5a3fa447c9c5",
     "packages": [
         {
             "name": "bramus/ansi-php",
@@ -16,7 +16,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/bramus/ansi-php/c0dcf9a949e1c6111bbbb52a8ead34776064b209.zip",
+                "url": "https://api.github.com/repos/bramus/ansi-php/zipball/c0dcf9a949e1c6111bbbb52a8ead34776064b209",
                 "reference": "c0dcf9a949e1c6111bbbb52a8ead34776064b209",
                 "shasum": ""
             },
@@ -56,7 +56,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/bramus/monolog-colored-line-formatter/6bff15eee00afe2690642535b0f1541f10852c2b.zip",
+                "url": "https://api.github.com/repos/bramus/monolog-colored-line-formatter/zipball/6bff15eee00afe2690642535b0f1541f10852c2b",
                 "reference": "6bff15eee00afe2690642535b0f1541f10852c2b",
                 "shasum": ""
             },
@@ -98,7 +98,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/guzzle/guzzle/f4db5a78a5ea468d4831de7f0bf9d9415e348699.zip",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/f4db5a78a5ea468d4831de7f0bf9d9415e348699",
                 "reference": "f4db5a78a5ea468d4831de7f0bf9d9415e348699",
                 "shasum": ""
             },
@@ -163,7 +163,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/guzzle/promises/a59da6cf61d80060647ff4d3eb2c03a2bc694646.zip",
+                "url": "https://api.github.com/repos/guzzle/promises/zipball/a59da6cf61d80060647ff4d3eb2c03a2bc694646",
                 "reference": "a59da6cf61d80060647ff4d3eb2c03a2bc694646",
                 "shasum": ""
             },
@@ -214,7 +214,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/guzzle/psr7/f5b8a8512e2b58b0071a7280e39f14f72e05d87c.zip",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/f5b8a8512e2b58b0071a7280e39f14f72e05d87c",
                 "reference": "f5b8a8512e2b58b0071a7280e39f14f72e05d87c",
                 "shasum": ""
             },
@@ -279,7 +279,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/Seldaek/monolog/fd8c787753b3a2ad11bc60c063cff1358a32a3b4.zip",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/fd8c787753b3a2ad11bc60c063cff1358a32a3b4",
                 "reference": "fd8c787753b3a2ad11bc60c063cff1358a32a3b4",
                 "shasum": ""
             },
@@ -357,7 +357,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/nikic/PHP-Parser/a1e8e1a30e1352f118feff1a8481066ddc2f234a.zip",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/a1e8e1a30e1352f118feff1a8481066ddc2f234a",
                 "reference": "a1e8e1a30e1352f118feff1a8481066ddc2f234a",
                 "shasum": ""
             },
@@ -408,7 +408,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/php-fig/http-message/f6561bf28d520154e4b0ec72be95418abe6d9363.zip",
+                "url": "https://api.github.com/repos/php-fig/http-message/zipball/f6561bf28d520154e4b0ec72be95418abe6d9363",
                 "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363",
                 "shasum": ""
             },
@@ -458,7 +458,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/php-fig/log/4ebe3a8bf773a19edfe0a84b6585ba3d401b724d.zip",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
                 "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
                 "shasum": ""
             },
@@ -505,7 +505,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/symfony/console/116bc56e45a8e5572e51eb43ab58c769a352366c.zip",
+                "url": "https://api.github.com/repos/symfony/console/zipball/116bc56e45a8e5572e51eb43ab58c769a352366c",
                 "reference": "116bc56e45a8e5572e51eb43ab58c769a352366c",
                 "shasum": ""
             },
@@ -573,7 +573,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/symfony/debug/eb95d9ce8f18dcc1b3dfff00cb624c402be78ffd.zip",
+                "url": "https://api.github.com/repos/symfony/debug/zipball/eb95d9ce8f18dcc1b3dfff00cb624c402be78ffd",
                 "reference": "eb95d9ce8f18dcc1b3dfff00cb624c402be78ffd",
                 "shasum": ""
             },
@@ -629,7 +629,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/symfony/polyfill-mbstring/7c8fae0ac1d216eb54349e6a8baa57d515fe8803.zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/7c8fae0ac1d216eb54349e6a8baa57d515fe8803",
                 "reference": "7c8fae0ac1d216eb54349e6a8baa57d515fe8803",
                 "shasum": ""
             },
@@ -680,16 +680,16 @@
         },
         {
             "name": "zsxsoft/php-w3c-validator",
-            "version": "17.11.1.0",
+            "version": "17.11.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zsxsoft/php-w3c-validator.git",
-                "reference": "c9e8eac96ccf3170d4c8986060f44bf63da839f0"
+                "reference": "10b63bdc7d6d878bbea496c16244bc20a9fb3ff9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/zsxsoft/php-w3c-validator/c9e8eac96ccf3170d4c8986060f44bf63da839f0.zip",
-                "reference": "c9e8eac96ccf3170d4c8986060f44bf63da839f0",
+                "url": "https://api.github.com/repos/zsxsoft/php-w3c-validator/zipball/10b63bdc7d6d878bbea496c16244bc20a9fb3ff9",
+                "reference": "10b63bdc7d6d878bbea496c16244bc20a9fb3ff9",
                 "shasum": ""
             },
             "require": {
@@ -716,8 +716,8 @@
                     "email": "zsx@zsxsoft.com"
                 }
             ],
-            "description": "The PHP binding of vnu.jar (The Nu Html Checker) Edit",
-            "time": "2017-10-10T11:45:17+00:00"
+            "description": "The PHP binding of vnu.jar (The Nu Html Checker)",
+            "time": "2017-10-30T13:24:27+00:00"
         }
     ],
     "packages-dev": [],

@@ -61,6 +61,10 @@ class ServerManager
         Logger::info("Started PHP Server(PID=${pid}) at $listenAddress");
         $this->pid = $pid;
         file_put_contents($this->pidPath, $pid);
+        while (true) {
+            sleep(10000);
+            if (!proc_get_status($proc)['running']) break;
+        }
     }
 
     protected function stop()

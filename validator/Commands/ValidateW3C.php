@@ -24,20 +24,15 @@ class ValidateW3C extends Command
     {
         $this
             ->setName('scan:w3c')
-            ->setDescription('Validate W3C Standard for theme')
-            ->addArgument(
-                'appId',
-                InputArgument::REQUIRED,
-                'App ID'
-            );
+            ->setDescription('Validate W3C Standard for theme');
     }
 
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $appId = $input->getArgument("appId");
-        $app = ZBPWrapper::loadApp($appId);
-        if ($app->type !== 'theme') return;
+        // $appId = $input->getArgument("appId");
+        // $app = ZBPWrapper::loadApp($appId);
+        // if ($app->type !== 'theme') return;
         (new Task())->run();
     }
 }

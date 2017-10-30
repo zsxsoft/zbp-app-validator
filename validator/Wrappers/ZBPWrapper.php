@@ -76,11 +76,12 @@ class ZBPWrapper
     protected function changeTheme()
     {
         \SetTheme($this->app->id, array_keys($this->app->GetCssFiles())[0]);
+        $this->zbp->template->SetPath($this->zbp->usersdir . 'cache/compiled/' . $this->app->id . '/');
         $this->zbp->BuildModule();
         $this->zbp->SaveCache();
         Logger::info('Compiling Theme..');
         // @TODO Maybe a ZBP's bug
-        $this->zbp->template->SetPath($this->zbp->usersdir . 'cache/compiled/' . $this->app->id . '/');
+        $this->zbp->template->theme = $this->app->id;
         $this->zbp->CheckTemplate(false, true);
         Logger::info("Theme changed to {$this->app->id}");
     }
