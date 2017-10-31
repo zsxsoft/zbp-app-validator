@@ -6,5 +6,6 @@
   "validateUrls": [
     "",
     "?id=3"
-  ]
+  ],
+  "language": "zh-CN"
 }

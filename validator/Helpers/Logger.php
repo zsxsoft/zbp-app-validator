@@ -7,9 +7,11 @@
  */
 
 namespace Zsxsoft\AppValidator\Helpers;
+
 use Bramus\Monolog\Formatter\ColoredLineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger as Log;
+use Zsxsoft\AppValidator\Wrappers\Config;
 
 /**
  * Class Logger
@@ -33,7 +35,7 @@ class Logger
 {
     use StaticInstance;
 
-    protected $log = NULL;
+    protected $log = null;
 
     public function __construct()
     {
@@ -47,6 +49,9 @@ class Logger
 
     public function __call($name, $arguments)
     {
+        if (count($arguments) == 1 || count($arguments) == 2) {
+            $arguments[0] = $this->translateLanguage($arguments[0]);
+        }
         call_user_func_array([$this->log, $name], $arguments);
     }
 
@@ -66,12 +71,22 @@ class Logger
     {
         if (DIRECTORY_SEPARATOR === '\\') {
             return
-                '10.0.10586' === PHP_WINDOWS_VERSION_MAJOR.'.'.PHP_WINDOWS_VERSION_MINOR.'.'.PHP_WINDOWS_VERSION_BUILD
-                || false !== getenv('ANSICON')
-                || 'ON' === getenv('ConEmuANSI')
-                || 'xterm' === getenv('TERM');
+              '10.0.10586' === PHP_WINDOWS_VERSION_MAJOR . '.' . PHP_WINDOWS_VERSION_MINOR . '.' . PHP_WINDOWS_VERSION_BUILD
+              || false !== getenv('ANSICON')
+              || 'ON' === getenv('ConEmuANSI')
+              || 'xterm' === getenv('TERM');
         }
 
         return true;//function_exists('posix_isatty');
+    }
+
+    private function translateLanguage($original)
+    {
+        $lang = str_replace('-', '', Config::Get('language'));
+        $class = 'Zsxsoft\\AppValidator\\Languages\\' . $lang;
+        if (class_exists($class)) {
+            return call_user_func([$class, 'translate'], $original);
+        }
+        throw new \InvalidArgumentException($lang);
     }
 }
