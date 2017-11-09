@@ -1,0 +1,26 @@
+{
+  "name": "zbp-app-validator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zsxsoft/zbp-app-validator.git"
+  },
+  "author": "zsx <zsx@zsxsoft.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zsxsoft/zbp-app-validator/issues"
+  },
+  "homepage": "https://github.com/zsxsoft/zbp-app-validator#readme",
+  "dependencies": {
+    "debug": "^3.1.0",
+    "deep-assign": "^2.0.0",
+    "electron": "^1.7.9",
+    "nightmare": "^2.10.0",
+    "nightmare-custom-event": "^0.2.0"
+  }
+}
