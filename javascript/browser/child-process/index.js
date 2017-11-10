@@ -40,6 +40,7 @@ async function runNightmareQueue () {
     useContentSize: true,
     frame: false,
     show: false,
+    enableLargerThanScreen: true,
     width: viewport.width,
     height: viewport.height,
     electronPath: config.electronPath === '' ? currentElectronPath : config.electronPath

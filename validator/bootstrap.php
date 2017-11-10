@@ -9,6 +9,7 @@ namespace AppChecker;
 
 use Symfony\Component\Console\Application;
 use Zsxsoft\AppValidator\Commands\ChangeTheme;
+use Zsxsoft\AppValidator\Commands\RunBrowser;
 use Zsxsoft\AppValidator\Commands\ScanGlobalVariables;
 use Zsxsoft\AppValidator\Commands\EndProject;
 use Zsxsoft\AppValidator\Commands\ExtractApp;
@@ -29,6 +30,7 @@ $application->add(new ScanGlobalVariables());
 $application->add(new ScanStaticCode());
 $application->add(new ChangeTheme());
 $application->add(new ValidateW3C());
+$application->add(new RunBrowser());
 $application->add(new StartServer());
 $application->add(new StartPipe());
 $application->run();
