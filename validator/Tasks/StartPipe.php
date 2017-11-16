@@ -42,6 +42,7 @@ class StartPipe
         if ($type == 'theme') {
             $this->startProcess('theme:change', $appId);
             $this->startProcess('scan:code', $appId);
+            $this->startProcess('browser');
             $this->startProcess('scan:w3c');
         } else {
             $this->startProcess('scan:code', $appId);
