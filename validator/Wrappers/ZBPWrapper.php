@@ -39,7 +39,7 @@ class ZBPWrapper
         $zbp->Load();
     }
 
-    protected function loadApp($appId)
+    protected function loadApp($appId, $temp = false)
     {
         $zbp = $this->zbp;
         $app = $zbp->LoadApp('plugin', $appId);
@@ -50,7 +50,9 @@ class ZBPWrapper
             Logger::error("Load $appId failed!");
             exit;
         }
-        $this->app = $app;
+        if (!$temp) {
+            $this->app = $app;
+        }
         return $app;
     }
 
@@ -79,6 +81,7 @@ class ZBPWrapper
 
     protected function changeTheme()
     {
+        $this->installDependencies($this->app);
         \SetTheme($this->app->id, array_keys($this->app->GetCssFiles())[0]);
         $this->zbp->template->SetPath($this->zbp->usersdir . 'cache/compiled/' . $this->app->id . '/');
         $this->zbp->BuildModule();
@@ -88,5 +91,39 @@ class ZBPWrapper
         $this->zbp->template->theme = $this->app->id;
         $this->zbp->CheckTemplate(false, true);
         Logger::info("Theme changed to {$this->app->id}");
+    }
+
+    protected function enablePlugin()
+    {
+        $this->installDependencies($this->app);
+        \EnablePlugin($this->app->id);
+        Logger::info("Enabled {$this->app->id}");
+    }
+
+    protected function installDependencies($app)
+    {
+        $dependencies = explode('|', $app->advanced_dependency);
+        foreach ($dependencies as $dependency) {
+            if (!$dependency) {
+                continue;
+            }
+            if (!in_array($dependency, $this->zbp->activedapps)) {
+                $this->installDependency($dependency);
+            }
+        }
+    }
+
+    protected function installDependency($appId)
+    {
+        Logger::info("Installing Dependency: $appId");
+        $app = AppCenterWrapper::installAppFromRemote($appId);
+        if (!$app) {
+            return false;
+        }
+        $this->installDependencies($app);
+        \EnablePlugin($app->id);
+        // @TODO Maybe another ZBP Bug
+        $this->zbp->activeapps[] = $app->id;
+        Logger::info("Enabled {$app->id}");
     }
 }
