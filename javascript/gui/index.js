@@ -36,7 +36,6 @@
     const innerHeight = parseInt(bodyStyle.getPropertyValue('height'), 10) - 150
     term.resize(Math.floor(innerWidth / fontSize), Math.floor(innerHeight / lineHeight))
   }
-  window.term = term
   const saveConfig = newConfig => {
     const savingConfig = JSON.parse(readFileSync(configPath, 'utf-8'))
     const keys = ['builtinServer', 'host', 'zbpPath']
@@ -58,6 +57,8 @@
     }
   }
 
+  currentWindow.setIcon(join(rootPath, 'resources/Logo.png'))
+  window.term = term
   window.addEventListener('resize', calculateTermSize)
 
   Vue.use(ElementUI)
