@@ -59,7 +59,7 @@ class StartPipe
     private function getCommandLine($command, $argument = '') {
         $path = escapeshellarg(ROOT_PATH . DIRECTORY_SEPARATOR . 'checker');
         $arg = $argument === '' ? '' : escapeshellarg($argument);
-        return "php $path $command $arg";
+        return '"' . PHP_BINARY . "\" $path $command $arg";
     }
 
 

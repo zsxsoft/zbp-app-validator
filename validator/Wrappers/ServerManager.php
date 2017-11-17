@@ -41,7 +41,7 @@ class ServerManager
         $this->stop();
         $pipes = [];
         $listenAddress = Config::get('listenAddress');
-        $proc = proc_open('php -S ' . $listenAddress,
+        $proc = proc_open('"' . PHP_BINARY . '" -S ' . $listenAddress,
             [
                 0 => ["pipe", "r"],
                 1 => ['file', TempHelper::getPath('/server-output.txt'), 'w'],

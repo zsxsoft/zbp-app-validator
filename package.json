@@ -20,7 +20,9 @@
     "debug": "^3.1.0",
     "deep-assign": "^2.0.0",
     "electron": "^1.7.9",
+    "jquery": "^3.2.1",
     "nightmare": "^2.10.0",
-    "nightmare-custom-event": "^0.2.0"
+    "nightmare-custom-event": "^0.2.0",
+    "xterm": "^2.9.2"
   }
 }

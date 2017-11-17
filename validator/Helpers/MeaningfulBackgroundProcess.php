@@ -34,7 +34,7 @@ class MeaningfulBackgroundProcess extends BackgroundProcess
                   0 => array("pipe", "r"),
                   1 => array("pipe", "w"),
                 );
-                $prog = proc_open("start /b " . $this->command, $descriptorspec, $pipes, $startDir, NULL);
+                $prog = proc_open("start /b \"\" " . $this->command, $descriptorspec, $pipes, $startDir, NULL);
                 if (is_resource($prog)) {
                     $ppid = proc_get_status($prog)['pid'];
                 } else {
