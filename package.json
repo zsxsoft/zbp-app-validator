@@ -20,9 +20,14 @@
     "debug": "^3.1.0",
     "deep-assign": "^2.0.0",
     "electron": "^1.7.9",
-    "jquery": "^3.2.1",
+    "element-ui": "^2.0.5",
     "nightmare": "^2.10.0",
     "nightmare-custom-event": "^0.2.0",
+    "normalize.css": "^7.0.0",
+    "vue": "^2.5.4",
     "xterm": "^2.9.2"
+  },
+  "devDependencies": {
+    "element-theme-chalk": "^2.0.5"
   }
 }

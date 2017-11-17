@@ -4,19 +4,64 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>GUI</title>
+  <link rel="stylesheet" href="../../node_modules/xterm/dist/xterm.css" />
+  <link rel="stylesheet" href="element/index.css">
+
+  <link rel="stylesheet" href="index.css" />
+
+  <title>Z-BlogPHP App Validator</title>
 </head>
 <body>
-  <div id="terminal"></div>
-<link rel="stylesheet" href="../../node_modules/xterm/dist/xterm.css" />
-<script src="../../node_modules/xterm/dist/xterm.js"></script>
-<script src="../../node_modules/xterm/dist/addons/attach/attach.js"></script>
+  <div id="app">
+    <el-container class="app">
+      <el-header><h1>Z-BlogPHP App Validator</h1></el-header>
+      <el-main>
+        <el-row :gutter="20">
+          <el-col :span="8" class="operation">
+            <el-form>
+              <el-form-item label="PHP路径">
+                <el-input placeholder="不填写将使用环境变量内的PHP" v-model="input.phpPath" class="input-with-select" >
+                  <el-button slot="append" @click="browsePHPPath">浏览</el-button>
+                </el-input>
+              </el-form-item>
+              <el-form-item label="待审核应用ID / zba">
+                <el-input v-model="input.appPath" class="input-with-select">
+                    <el-button slot="append" @click="browseAppId">浏览</el-button>
+                </el-input>
+              </el-form-item>
+              <el-form-item>
+                  <el-button type="success" @click="doAudit" :disabled="disableAuditButton">立即审核</el-button>
+              </el-form-item>
+              <el-form-item>
+                  <el-switch v-model="config.builtinServer" active-color="#13ce66" inactive-color="#ff4949" active-text="自行配置服务器" inactive-text="使用审核器内置服务器">
+                </el-switch>
+              </el-form-item>
+              <el-form-item label="网站地址" v-if="!config.builtinServer">
+                <el-input v-model="config.host" class="input-with-select" />
+              </el-form-item>
+              <el-form-item label="Z-BlogPHP文件夹" v-if="!config.builtinServer">
+                <el-input v-model="config.zbpPath" class="input-with-select" >
+                  <el-button slot="append" @click="browseZBPPath">浏览</el-button>
+                </el-input>
+              </el-form-item>
+            </el-form>
+          </el-col>
+          <el-col :span="16" class="logs"><div id="terminal"></div></el-col>
+        </el-row>
+      </el-main>
+      <el-footer style="text-align: center; overflow: hidden">
+        <p>
+          <span>Powered by zsx</span>
+          <el-button type="text" @click="openBrowser('https://github.com/zsxsoft/zbp-app-validator')">zbp-app-validator on GitHub</el-button>
+          <el-button type="text" @click="startLauncher('assoc')">关联zba文件</el-button>
+          <el-button type="text" @click="startLauncher('unassoc')">解除文件管理</el-button>
+        </p>
+      </el-footer>
+    </el-container>
+  </div>
 
-<script>
-
-  var term = new Terminal();
-  term.open(document.getElementById('#terminal'));
-  term.write('Hello from \033[1;3;31mxterm.js\033[0m $ ')
-</script>
+  <script src="../../node_modules/xterm/dist/xterm.js"></script>
+  <script src="../../node_modules/xterm/dist/addons/attach/attach.js"></script>
+  <script src="index.js"></script>
 </body>
 </html>
