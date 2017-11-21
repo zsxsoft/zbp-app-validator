@@ -44,7 +44,7 @@ let main argv =
     let unassociate extension = 
         Registry.ClassesRoot.DeleteSubKeyTree(extension)
         
-    let runElectronWithArgv () = runElectron (argv |> String.concat " ")
+    let runElectronWithArgv () = runElectron (argv |> Array.map (fun s -> "\"" + s + "\"") |> String.concat " ")
     
     match argv.Length with
         | 0 -> runElectron "" |> ignore

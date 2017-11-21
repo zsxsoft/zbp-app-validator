@@ -13,7 +13,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFSharpCoreVersion>4.4.1.0</TargetFSharpCoreVersion>
     <Name>windows-launcher</Name>
-    <Win32Resource>D:\Projects\zbp-app-validator\launcher\windows-launcher\resources.res</Win32Resource>
+    <Win32Resource>resources.res</Win32Resource>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
