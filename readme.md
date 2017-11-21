@@ -3,6 +3,8 @@ zbp-app-validator
 
 Z-BlogPHP App 机器审核工具
 
+服务器版本将基于：https://github.com/zsxsoft/mmp-server
+
 ## 已实现功能
 
 ### 环境配置
