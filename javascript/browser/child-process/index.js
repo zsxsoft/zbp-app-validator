@@ -10,7 +10,7 @@ const networkLogged = new Map()
 const nightmareQueue = []
 const screenshotPath = path.join(config.tempPath, '/screenshot')
 
-const currentElectronPath = typeof(require('electron')) === 'string' ? currentElectronPath : require('electron').app.getPath('exe')
+const currentElectronPath = typeof(require('electron')) === 'string' ? require('electron') : require('electron').app.getPath('exe')
 
 if (!fs.existsSync(screenshotPath)) {
   fs.mkdirSync(screenshotPath)
@@ -43,7 +43,12 @@ async function runNightmareQueue () {
     enableLargerThanScreen: true,
     width: viewport.width,
     height: viewport.height,
-    electronPath: config.electronPath === '' ? currentElectronPath : config.electronPath
+    electronPath: config.electronPath === '' ? currentElectronPath : config.electronPath,
+    webPreferences: {
+      nodeIntegration: false,
+      nodeIntegrationInWorker: false,
+      sandbox: true
+    }
   })
 
   if (userAgent) {
