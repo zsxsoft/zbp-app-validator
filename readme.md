@@ -17,6 +17,7 @@ Z-BlogPHP App 机器审核工具
 1. 静态危险PHP功能与函数扫描
 1. 全局变量合规性检测
 1. 静态调用数据库随机函数扫描
+1. PHP 7兼容性扫描
 
 ### 主题审核
 1. 离线W3C规范扫描
@@ -63,6 +64,7 @@ php checker help
 
 ```bash
 composer update
+php download-dep.php
 npm install
 ```
 如果不使用GUI，已经可以启动项目了。

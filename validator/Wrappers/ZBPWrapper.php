@@ -39,6 +39,12 @@ class ZBPWrapper
         $zbp->Load();
     }
 
+
+    protected function getAppPath () {
+        $app = self::getApp();
+        return ZBPHelper::getPath() . '/zb_users/' . $app->type . '/' . $app->id . '/';
+    }
+
     protected function loadApp($appId, $temp = false)
     {
         $zbp = $this->zbp;
