@@ -14,17 +14,17 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Zsxsoft\AppValidator\Helpers\Logger;
 use Zsxsoft\AppValidator\Helpers\TempHelper;
-use Zsxsoft\AppValidator\Tasks\PHP7CC as Task;
+use Zsxsoft\AppValidator\Tasks\PHPCompatibility as Task;
 use Zsxsoft\AppValidator\Wrappers\ZBPWrapper;
 
-class PHP7CC extends Command
+class PHPCompatibility extends Command
 {
 
     protected function configure()
     {
         $this
-            ->setName('scan:php7')
-            ->setDescription('Scan code not compatible with PHP 7')
+            ->setName('scan:phpcc')
+            ->setDescription('Scan the code which is not compatible with defined PHP version')
             ->addArgument(
                 'appId',
                 InputArgument::REQUIRED,

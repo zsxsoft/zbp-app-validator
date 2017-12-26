@@ -38,7 +38,7 @@ class StartPipe
         $type = $app->type;
 
         $this->startProcess('scan:variable', $appId);
-        $this->startProcess('scan:php7', $appId);
+        $this->startProcess('scan:phpcc', $appId);
 
         if ($type == 'theme') {
             $this->startProcess('theme:change', $appId);

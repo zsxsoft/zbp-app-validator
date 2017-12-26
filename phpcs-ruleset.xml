@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<ruleset name="php-compatibility" namespace="Zsxsoft\AppValidator\PHPCS">
+  <description>PHP Standard for zbp-app-validator</description>
+  <rule ref="PHPCompatibility">
+    <exclude name="Internal.NoCodeFound">
+      <severity>0</severity>
+    </exclude>
+    <exclude name="Internal.Tokenizer.Exception" />
+  </rule>
+</ruleset>
