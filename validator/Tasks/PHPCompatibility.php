@@ -44,19 +44,26 @@ class PHPCompatibility
             throw new \Exception('Parse output failed');
         }
 
-
+        $sum = 0;
+        /*
         if ($data->totals->errors === 0 && $data->totals->warnings === 0) {
-            Logger::info("Check PHP Compatibility finished, scanned {$data->summary->checkedFiles} files");
             return;
         }
+        */
 
         foreach ($data->files as $fileName => $file) {
             foreach ($file->messages as $error) {
+                if (in_array($error->source, ["Internal.Tokenizer.Exception", "Internal.NoCodeFound"])) continue;
                 Logger::error($fileName . ': ');
                 Logger::error("Line {$error->line}: {$error->message}");
+                $sum++;
             }
         }
-        Logger::warning('You\'d better check these problems.');
+        if ($sum == 0) {
+            Logger::info("Check PHP Compatibility finished.");
+        } else {
+            Logger::warning('You\'d better check these problems.');
+        }
 
     }
 

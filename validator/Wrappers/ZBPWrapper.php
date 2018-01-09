@@ -92,6 +92,7 @@ class ZBPWrapper
         $this->zbp->template->SetPath($this->zbp->usersdir . 'cache/compiled/' . $this->app->id . '/');
         $this->zbp->BuildModule();
         $this->zbp->SaveCache();
+        \InstallPlugin($this->app->id);
         Logger::info('Compiling Theme..');
         // @TODO Maybe a ZBP's bug
         $this->zbp->template->theme = $this->app->id;
@@ -103,6 +104,7 @@ class ZBPWrapper
     {
         $this->installDependencies($this->app);
         \EnablePlugin($this->app->id);
+        \InstallPlugin($this->app->id);
         Logger::info("Enabled {$this->app->id}");
     }
 
@@ -128,6 +130,7 @@ class ZBPWrapper
         }
         $this->installDependencies($app);
         \EnablePlugin($app->id);
+        \InstallPlugin($this->app->id);
         // @TODO Maybe another ZBP Bug
         $this->zbp->activeapps[] = $app->id;
         Logger::info("Enabled {$app->id}");
