@@ -83,7 +83,7 @@ class ZBPInstaller
             foreach ($xml->file as $f) {
                 $filename = $webPath . DIRECTORY_SEPARATOR . str_replace('\\', '/', $f->attributes());
                 $dirname = dirname($filename);
-                mkdir($dirname, 0755, true);
+                @mkdir($dirname, 0755, true);
                 file_put_contents($filename, base64_decode($f));
             }
         }

@@ -14,7 +14,7 @@ class PathHelper
     public static function getAbsoluteFilename($filename)
     {
         $path = [];
-        foreach (preg_split('/\/|' . preg_quote(DIRECTORY_SEPARATOR) . '/', $filename) as $part) {
+        foreach (preg_split('/\/|' . '\\'. preg_quote(DIRECTORY_SEPARATOR) . '/', $filename) as $part) {
             // ignore parts that have no value
             if (empty($part) || $part === '.') continue;
 
@@ -28,7 +28,11 @@ class PathHelper
                 // now, here we don't like
                 throw new \Exception('Climbing above the root is not permitted.');
             }
-        }
+	}
+
+	if (DIRECTORY_SEPARATOR !== '\\') {
+            array_unshift($path, '');
+	}
 
         return join(DIRECTORY_SEPARATOR, $path);
     }
