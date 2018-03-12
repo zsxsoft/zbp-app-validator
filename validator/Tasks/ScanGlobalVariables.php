@@ -55,9 +55,9 @@ class ScanGlobalVariables
             if (preg_match($regex, $name)) {
                 Logger::info("Tested function: $name");
             } else {
-                Logger::error("Illegal function name: $name", false);
+                Logger::error("Illegal function name: $name");
                 if ($ret = PHPHelper::getFunctionDescription($name)) {
-                    Logger::error("In " . $ret->getFileName(), false);
+                    Logger::error("In " . $ret->getFileName());
                     Logger::error("Line " . ($ret->getStartLine() - 1) . " To " . ($ret->getEndLine() - 1));
                 }
             }
