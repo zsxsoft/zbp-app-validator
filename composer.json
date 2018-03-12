@@ -11,7 +11,7 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "zsxsoft/php-w3c-validator": "17.11.1.2",
+        "zsxsoft/php-w3c-validator": "17.11.1.3",
         "symfony/console": "^3.3",
         "monolog/monolog": "^1.23",
         "bramus/monolog-colored-line-formatter": "~2.0",

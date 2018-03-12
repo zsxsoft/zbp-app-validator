@@ -77,10 +77,15 @@ class AppCenterWrapper
         $url = "?alias=$appId";
         $data = $this->newHttpClient()->request('get', $url);
         $body = (string)$data->getBody();
-        $doc = new DOMDocument();
-        $doc->loadHTML($body);
-        $id = $doc->getElementById('inpId')->getAttribute('value');
-        return $id;
+        // $doc = new DOMDocument();
+        // $doc->loadHTML($body);
+        // $id = $doc->getElementById('inpId')->getAttribute('value');
+        $regex = '/articleID *= *[\'"](\d+)[\'"]/i';
+        $match = [];
+        if (preg_match($regex, $body, $match)) {
+            return $match[1];
+        }
+        return '0';
     }
 
     protected function installAppFromRemote($appId)
