@@ -15,6 +15,7 @@
 
   const { dialog, getCurrentWindow, process, shell } = require('electron').remote
   const { spawn, exec } = require('child_process')
+  const fontManager = require('font-manager')
   const { join } = require('path')
   const { readFileSync, writeFileSync } = require('fs')
   const rootPath = join(__dirname, '../../')
@@ -23,6 +24,8 @@
   const defaultConfig = JSON.parse(readFileSync(join(rootPath, '/config.default.json'), 'utf-8'))
   const currentWindow = getCurrentWindow()
   const argv = process.argv
+  const fontFamilies = fontManager.getAvailableFontsSync().map(p => p.family)
+  const monoFonts = ['Source Code Pro', 'Noto Mono', 'DejaVu Sans Mono', 'Monospace', 'Consolas'].filter(p => fontFamilies.includes(p))
 
   const term = new Terminal()
   const calculateTermSize = () => {
@@ -77,6 +80,9 @@
         this.input.appPath = argv[2]
       }
       term.open(document.getElementById('terminal'), false)
+      if (monoFonts.length > 0) {
+        term.setOption('fontFamily', monoFonts[0])
+      }
       term.writeln('Terminal...')
       calculateTermSize()
     },
@@ -127,7 +133,8 @@
         const p = spawn(phpPath, ['checker', 'start', this.input.appPath], {
           env: {
             'term': 'xterm'
-          }
+          },
+          shell: true
         })
         p.stdout.on('data', buf => term.write(buf.toString().replace(/\n/g, '\r\n')))
         p.stderr.on('data', buf => term.write(buf.toString().replace(/\n/g, '\r\n')))

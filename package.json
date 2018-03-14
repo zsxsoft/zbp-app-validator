@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron javascript/gui/index.html",
+    "rebuild": "electron-rebuild -f -o font-manager"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,7 @@
     "electron": "^1.8.3",
     "element-theme": "^2.0.1",
     "element-ui": "^2.2.1",
+    "font-manager": "^0.2.2",
     "nightmare": "^3.0.0",
     "nightmare-custom-event": "^0.2.0",
     "normalize.css": "^8.0.0",
@@ -29,6 +31,7 @@
     "xterm": "^3.2.0"
   },
   "devDependencies": {
+    "electron-rebuild": "^1.7.3",
     "element-theme-chalk": "^2.2.1"
   }
 }
