@@ -11,6 +11,7 @@ namespace Zsxsoft\AppValidator\Tasks;
 use function Sodium\version_string;
 use Zsxsoft\AppValidator\Helpers\Logger;
 use Zsxsoft\AppValidator\Helpers\PathHelper;
+use Zsxsoft\AppValidator\Helpers\PHPHelper;
 use Zsxsoft\AppValidator\Wrappers\Config;
 use Zsxsoft\AppValidator\Wrappers\ZBPWrapper;
 use Zsxsoft\W3CValidator\W3CValidator;
@@ -29,7 +30,7 @@ class PHPCompatibility
         Logger::info('Running PHPCompatibility..');
         Logger::info("Version: $minimumPHPVersion to latest");
         $output = trim(shell_exec(
-            '"' . PHP_BINARY . '"' . ' ' .
+            '"' . PHPHelper::getBinary() . '"' . ' ' .
             escapeshellarg(PathHelper::getAbsoluteFilename(ROOT_PATH . '/vendor/squizlabs/php_codesniffer/bin/phpcs')) . ' ' .
             " --standard=PHPCompatibility --runtime-set testVersion $minimumPHPVersion- --report=json -p " .
             escapeshellarg(ZBPWrapper::getAppPath())

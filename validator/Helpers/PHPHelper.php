@@ -11,6 +11,17 @@ namespace Zsxsoft\AppValidator\Helpers;
 class PHPHelper
 {
     use StaticInstance;
+    /**
+     * Get PHP Binary Path
+     * PHP_BINARY can be empty, @see https://github.com/sebastianbergmann/environment/issues/12
+     * @return string
+     */
+    public static function getBinary()
+    {
+        if (PHP_BINARY !== '') return PHP_BINARY;
+        if (isset($_SERVER['_'])) return $_SERVER['_'];
+        throw new \Exception('Cannot get PHP binary path, try to run command insider a shell.');
+    }
 
     /**
      * Include file

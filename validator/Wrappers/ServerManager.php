@@ -12,6 +12,7 @@ use Zsxsoft\AppValidator\Helpers\Logger;
 use Zsxsoft\AppValidator\Helpers\StaticInstance;
 use Zsxsoft\AppValidator\Helpers\TempHelper;
 use Zsxsoft\AppValidator\Helpers\ZBPHelper;
+use Zsxsoft\AppValidator\Helpers\PHPHelper;
 
 class ServerManager
 {
@@ -41,7 +42,7 @@ class ServerManager
         $this->stop();
         $pipes = [];
         $listenAddress = Config::get('listenAddress');
-        $proc = proc_open('"' . PHP_BINARY . '" -S ' . $listenAddress,
+        $proc = proc_open('"' . PHPHelper::getBinary() . '" -S ' . $listenAddress,
             [
                 0 => ["pipe", "r"],
                 1 => ['file', TempHelper::getPath('/server-output.txt'), 'w'],

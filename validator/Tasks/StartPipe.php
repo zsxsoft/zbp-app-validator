@@ -12,6 +12,7 @@ use Cocur\BackgroundProcess\BackgroundProcess;
 use RuntimeException;
 use Symfony\Component\Console\Input\InputOption;
 use Zsxsoft\AppValidator\Helpers\Logger;
+use Zsxsoft\AppValidator\Helpers\PHPHelper;
 use Zsxsoft\AppValidator\Helpers\MeaningfulBackgroundProcess;
 use Zsxsoft\AppValidator\Helpers\TempHelper;
 use Zsxsoft\AppValidator\Wrappers\Config;
@@ -60,7 +61,7 @@ class StartPipe
     private function getCommandLine($command, $argument = '') {
         $path = escapeshellarg(ROOT_PATH . DIRECTORY_SEPARATOR . 'checker');
         $arg = $argument === '' ? '' : escapeshellarg($argument);
-        return '"' . PHP_BINARY . "\" $path $command $arg";
+        return '"' . PHPHelper::getBinary() . "\" $path $command $arg";
     }
 
 
