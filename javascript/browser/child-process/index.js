@@ -47,7 +47,9 @@ async function runNightmareQueue () {
     webPreferences: {
       nodeIntegration: false,
       nodeIntegrationInWorker: false,
-      sandbox: true
+      // can't enable sandbox because ``require`` is limited in preload script
+      // so nightmare cannot require ``sliced``
+      // sandbox: true
     }
   })
 
