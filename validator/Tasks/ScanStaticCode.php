@@ -66,6 +66,21 @@ class ScanStaticCode
     }
 
     /**
+     * Check if is a page added CSRF Token
+     */
+    public function checkCSRFToken()
+    {
+        if (preg_match("/<form/", $this->file) && preg_match('/\.php/i', $this->path)) {
+            $regex = "/(GetCSRFToken|BuildSafeURL|BuildSafeCmdURL)/i";
+            if (!preg_match($regex, $this->file)) {
+                Logger::warning('Maybe no CSRF protection in backend!');
+                Logger::warning($this->path);
+            }
+        }
+    }
+
+
+    /**
      * Run Checker
      * @param string $path
      */
@@ -76,6 +91,7 @@ class ScanStaticCode
         $this->file = file_get_contents($this->path);
         $this->checkOrderByRand();
         $this->checkFunctions();
+        $this->checkCSRFToken();
     }
 
     /**
