@@ -22,10 +22,15 @@ class RunBrowser
         Logger::info('Running browser..');
         $electronPath = Config::get('electronPath');
         if (!$electronPath) {
-          $electronPath = PathHelper::getAbsoluteFilename(ROOT_PATH . '/node_modules/electron/dist/electron');
+            if (PHP_OS == 'Darwin') {
+                $path = '/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron';
+            } else {
+                $path = '/node_modules/electron/dist/electron';
+            }
+          $electronPath = PathHelper::getAbsoluteFilename(ROOT_PATH . $path);
         }
         $javascriptPath = PathHelper::getAbsoluteFilename(ROOT_PATH . '/javascript/browser/browser.js');
-        
+
         $output = trim(shell_exec($electronPath . ' ' . escapeshellarg($javascriptPath)));
         try {
             $data = json_decode($output);
