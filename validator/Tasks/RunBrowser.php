@@ -20,18 +20,18 @@ class RunBrowser
     {
         $data = null;
         Logger::info('Running browser..');
-        $electronPath = Config::get('electronPath');
-        if (!$electronPath) {
-            if (PHP_OS == 'Darwin') {
-                $path = '/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron';
+        $nodePath = Config::get('nodePath');
+        if (!$nodePath) {
+            $currentPath = PathHelper::getAbsoluteFilename(ROOT_PATH . '/bin/node');
+            if (file_exists($currentPath)) {
+                $nodePath = $currentPath;
             } else {
-                $path = '/node_modules/electron/dist/electron';
+                $nodePath = 'node';
             }
-            $electronPath = PathHelper::getAbsoluteFilename(ROOT_PATH . $path);
         }
         $javascriptPath = PathHelper::getAbsoluteFilename(ROOT_PATH . '/javascript/browser/browser.js');
 
-        $output = trim(shell_exec($electronPath . ' ' . escapeshellarg($javascriptPath)));
+        $output = trim(shell_exec($nodePath . ' ' . escapeshellarg($javascriptPath)));
         try {
             $data = json_decode($output);
         } catch (\Exception $e) {
