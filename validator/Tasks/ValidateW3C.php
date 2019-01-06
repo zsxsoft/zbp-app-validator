@@ -25,9 +25,15 @@ class ValidateW3C
             $url = Config::get('host') . $url;
             Logger::info("Validating $url");
             $validator = new W3CValidator();
-            // $ret = $validator->fileName($url)->run();
-            $ret = $validator->data(file_get_contents($url))->run();
-            $this->outputError($ret['error']->messages);
+            $data = @file_get_contents($url);
+            if ($data === false) {
+                $e = error_get_last();
+                Logger::error("Error: {$e['message']}");
+                error_clear_last();
+            } else {
+                $ret = $validator->data($data)->run();
+                $this->outputError($ret['error']->messages);
+            }
         }
 
     }

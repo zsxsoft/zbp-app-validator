@@ -96,7 +96,12 @@ class ZBPWrapper
     protected function changeTheme()
     {
         $this->installDependencies($this->app);
-        \SetTheme($this->app->id, array_keys($this->app->GetCssFiles())[0]);
+        $cssFiles = $this->app->GetCssFiles();
+        if (count($cssFiles) === 0) {
+            Logger::error('No CSS file, theme invalid');
+            exit(1);
+        }
+        \SetTheme($this->app->id, $cssFiles[array_keys($cssFiles)[0]]);
         $this->zbp->template->SetPath($this->zbp->usersdir . 'cache/compiled/' . $this->app->id . '/');
         $this->zbp->BuildModule();
         $this->zbp->SaveCache();

@@ -47,6 +47,10 @@ class ScanStaticCode
                 $outputter->{$item['type'] . '_'}($item);
             }
         } catch (\PhpParser\Error $e) {
+            $extension = pathinfo($this->_path, PATHINFO_EXTENSION);
+            if (strtolower($extension) !== 'php') {
+                return;
+            }
             Logger::error("Parse {$this->_path} Error.");
             Logger::error($e->getMessage());
         }
@@ -70,9 +74,13 @@ class ScanStaticCode
      */
     public function checkCSRFToken()
     {
-        if (preg_match("/<form/", $this->_file) && preg_match('/\.php/i', $this->_path)) {
+        if (preg_match("/<form/", $this->_file)) {
             $regex = "/(GetCSRFToken|BuildSafeURL|BuildSafeCmdURL)/i";
             if (!preg_match($regex, $this->_file)) {
+                $app = ZBPWrapper::getApp();
+                if ($app->type === 'theme' && preg_match('/(template|compiled)\/.*php$/i', $this->_path)) {
+                    return;
+                }
                 Logger::warning('Maybe no CSRF protection in backend!');
                 Logger::warning($this->_path);
             }

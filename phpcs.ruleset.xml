@@ -3,6 +3,8 @@
 	<description>
 		PHP Standard for zbp-app-validator
 	</description>
+	<exclude-pattern>tmp/*</exclude-pattern>
+
 	<rule ref="PEAR">
 		<exclude name="PEAR.Commenting.FileComment.Missing" />
 		<exclude name="PEAR.Commenting.FileComment.MissingCategoryTag" />

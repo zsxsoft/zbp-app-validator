@@ -56,7 +56,11 @@ class StartPipe
 
     private function startProcess($command, $argument = '')
     {
-        passthru($this->getCommandLine($command, $argument));
+        $return = 0;
+        passthru($this->getCommandLine($command, $argument), $return);
+        if ($return !== 0) {
+            exit;
+        }
     }
 
     private function getCommandLine($command, $argument = '')
