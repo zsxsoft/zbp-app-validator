@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "electron javascript/gui/index.html",
-    "rebuild": "electron-rebuild -f -o font-manager"
+    "start": "electron javascript/gui/index.html"
   },
   "repository": {
     "type": "git",
@@ -18,14 +17,14 @@
   },
   "homepage": "https://github.com/zsxsoft/zbp-app-validator#readme",
   "dependencies": {
-    "debug": "^3.1.0",
-    "deep-assign": "^2.0.0",
-    "electron": "^1.8.7",
+    "bluebird": "^3.5.3",
+    "debug": "^4.1.0",
+    "deep-assign": "^3.0.0",
+    "electron": "^4.0.1",
     "element-theme": "^2.0.1",
     "element-ui": "^2.2.1",
-    "nightmare": "^3.0.0",
-    "nightmare-custom-event": "^0.2.0",
     "normalize.css": "^8.0.0",
+    "puppeteer": "^1.11.0",
     "vue": "^2.5.16",
     "xterm": "^3.2.0"
   },

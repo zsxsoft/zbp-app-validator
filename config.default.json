@@ -12,37 +12,67 @@
   "simulateDevices": [
     {
       "name": "1920x1080",
-      "viewport": { "width": 1920, "height": 1080, "deviceScaleFactor": 1 },
+      "viewport": {
+        "width": 1920,
+        "height": 1080,
+        "deviceScaleFactor": 1
+      },
       "userAgent": "",
       "fullScreenScreenShot": true
     },
     {
       "name": "1366x768",
-      "viewport": { "width": 1366, "height": 768, "deviceScaleFactor": 1 },
+      "viewport": {
+        "width": 1366,
+        "height": 768,
+        "deviceScaleFactor": 1
+      },
       "userAgent": "",
       "fullScreenScreenShot": false
     },
     {
       "name": "1280x800x1",
-      "viewport": { "width": 1280, "height": 800, "deviceScaleFactor": 1 },
+      "viewport": {
+        "width": 1280,
+        "height": 800,
+        "deviceScaleFactor": 1
+      },
       "userAgent": "",
       "fullScreenScreenShot": false
     },
     {
       "name": "414x736x3-iPhone-6-Plus",
-      "viewport": { "width": 414, "height": 736, "deviceScaleFactor": 3 },
+      "viewport": {
+        "width": 414,
+        "height": 736,
+        "deviceScaleFactor": 3,
+        "isMobile": true,
+        "hasTouch": true
+      },
       "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit/600.1.3 (KHTML, like Gecko) Version/8.0 Mobile/12A4345d Safari/600.1.4",
       "fullScreenScreenShot": false
     },
     {
       "name": "1024x768x2-iPad",
-      "viewport": { "width": 1024, "height": 768, "deviceScaleFactor": 2 },
+      "viewport": {
+        "width": 768,
+        "height": 1024,
+        "deviceScaleFactor": 2,
+        "isMobile": true,
+        "hasTouch": true
+      },
       "userAgent": "Mozilla/5.0 (iPad; CPU OS 7_0 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A465 Safari/9537.53",
       "fullScreenScreenShot": false
     },
     {
       "name": "1280x800x2-Nexus10",
-      "viewport": { "width": 1280, "height": 800, "deviceScaleFactor": 2 },
+      "viewport": {
+        "width": 1280,
+        "height": 800,
+        "deviceScaleFactor": 2,
+        "isMobile": true,
+        "hasTouch": true
+      },
       "userAgent": "Mozilla/5.0 (Linux; Android 4.3; Nexus 10 Build/JSS15Q) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2307.2 Safari/537.36",
       "fullScreenScreenShot": false
     }

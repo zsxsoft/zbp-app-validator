@@ -1,13 +1,14 @@
-const Nightmare = require('./nightmare')
+const puppeteer = require('puppeteer')
+const Promise = require('bluebird')
 const debug = require('debug')('zav:javascript:browser')
 const config = require('../../shared/config')
 const fs = require('fs')
 const path = require('path')
 const { simulateDevices, validateUrls } = config
+const wait = (timeout) => new Promise((resolve, reject) => setTimeout(resolve, timeout))
 let finishedDevices = 0
 
-const networkLogged = new Map()
-const nightmareQueue = []
+const queue = []
 const screenshotPath = path.join(config.tempPath, '/screenshot')
 
 const currentElectronPath = typeof(require('electron')) === 'string' ? require('electron') : require('electron').app.getPath('exe')
@@ -16,101 +17,92 @@ if (!fs.existsSync(screenshotPath)) {
   fs.mkdirSync(screenshotPath)
 }
 
-async function runNightmareQueueWrapper () {
+async function runQueue () {
   try {
-    await runNightmareQueue()
+    await runBrowser()
   } catch (e) {
     console.error(e)
     process.exit(1)
   }
 }
 
-async function runNightmareQueue () {
-  if (nightmareQueue.length <= 0) return
-  const item = nightmareQueue.pop()
+async function runBrowser () {
+  if (queue.length <= 0) return
+  const item = queue.pop()
   const device = item[0]
   const url = item[1]
-  console.log(`loading ${device.name} with ${url}`)
+  const onProcessExit = () => {
+    finishedDevices--
+    if (finishedDevices === 0) {
+      process.exit(0)
+    }
+    setImmediate(() => {
+      runQueue()
+    })
+  }
+  console.log(`Loading ${device.name} with ${url}`)
   debug(`loading ${device.name} with ${url}`)
   const { viewport, userAgent } = device
-  const nightmare = Nightmare({
-    switches: {
-      'force-device-scale-factor': viewport.deviceScaleFactor
-    },
-    useContentSize: true,
-    frame: false,
-    show: false,
-    enableLargerThanScreen: true,
-    width: viewport.width,
-    height: viewport.height,
-    electronPath: config.electronPath === '' ? currentElectronPath : config.electronPath,
-    webPreferences: {
-      nodeIntegration: false,
-      nodeIntegrationInWorker: false,
-      // can't enable sandbox because ``require`` is limited in preload script
-      // so nightmare cannot require ``sliced``
-      // sandbox: true
+
+  const browser = await puppeteer.launch({
+    defaultViewport: viewport,
+    // headless: false
+  })
+  const page = await browser.newPage()
+  if (userAgent) {
+    await page.setUserAgent(userAgent)
+  }
+  page.on('console', (message) => {
+    const type = message.type()
+    const text = message.text()
+    if (process.send) {
+      process.send({type: 'console', data: {type, text, url, device: device.name}})
+    }
+    debug(`get console: ${type}: ${text}`)
+  })
+  page.on('response', async (response) => {
+    const url = response.url()
+
+    const object = {
+      url,
+      status: response.status(),
+      statusText: response.statusText(),
+      length: await response.buffer().then(p => p.length),
+      remoteAddress: response.remoteAddress(),
+      headers: response.headers(),
+      request: {
+        method: response.request().method(),
+        headers: response.request().headers()
+      },
+      device: device.name
+    }
+    if (process.send) {
+      process.send({type: 'network', data: object})
     }
   })
-
-  if (userAgent) {
-    nightmare.useragent(userAgent)
-  }
-
-  nightmare
-    //.viewport(viewport.width, viewport.height)
-    .logErrors()
-    .getNetwork()
-    .on('network-completed', (detail) => {
-      if (networkLogged.has(detail.url)) return
-      networkLogged.set(detail.url, true)
-      process.send({type: 'network', data: detail})
-    })
-    .on('console', (type, message, stack) => {
-      process.send({type: 'console', data: {type, message, url, device: device.name}})
-      debug(`get console: ${type}: ${message}`)
-    })
-    .goto(url)
-    .evaluate(function() {
-      const s = document.styleSheets[0];
-      s.insertRule('::-webkit-scrollbar { display:none; }');
-    })
-
-  if (device.fullScreenScreenShot) {
-    const dimensions = await nightmare
-      .wait('body')
-      .evaluate(function () {
-        const body = document.querySelector('body')
-        return {
-          height: body.scrollHeight,
-          width: body.scrollWidth
-        }
-      })
-    debug(`setting screenshot size to ${JSON.stringify(dimensions)}`)
-    await nightmare
-      .viewport(dimensions.width, dimensions.height)
-      .wait(1000)
-  }
-
-  await nightmare.screenshot(path.join(screenshotPath, `${device.name}-${encodeURIComponent(url)}.png`))
-  await nightmare.end()
-  debug('closed nightmare')
-
-  finishedDevices--
-  if (finishedDevices === 0) {
-    process.exit(0)
-  }
-
-  setImmediate(() => {
-    runNightmareQueueWrapper()
+  page.on('pageerror', (e) => {
+    console.log(e)
   })
+
+
+  await page.goto(url)
+  await wait(3000)
+  await page.screenshot({
+    path: path.join(screenshotPath, `${device.name}-${encodeURIComponent(url)}.png`),
+    fullPage: device.fullScreenScreenShot
+  })
+  await browser.close()
+
+  onProcessExit()
+
 }
 
 simulateDevices.forEach(device => {
   validateUrls.forEach(url => {
-    nightmareQueue.push([device, config.host + url])
+    queue.push([device, config.host + url])
     finishedDevices++
   })
 })
-runNightmareQueueWrapper()
-runNightmareQueueWrapper() // call twice to simulate two threads
+
+runQueue()
+runQueue() // call twice to simulate two threads

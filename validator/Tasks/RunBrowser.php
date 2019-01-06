@@ -39,18 +39,24 @@ class RunBrowser
         }
 
         if (count($data->console) > 0) {
-            foreach ($data->console as $message) {
-                Logger::info("Console message: " . $message);
+            foreach ($data->console as $console) {
+                $type = 'info';
+                if ($console->type === 'error') {
+                    $type = 'error';
+                } else if ($console->type === 'warning') {
+                    $type = 'warn';
+                }
+                Logger::$type("{$console->count} * Console: [{$console->text}] first occurred on {$console->device} at {$console->url}");
             }
         }
 
         if (count($data->network) > 0) {
             foreach ($data->network as $request) {
                 $method = 'info';
-                if ($request->statusCode != 200) {
+                if ($request->status != 200) {
                     $method = 'warn';
                 }
-                Logger::$method("Network request: {$request->statusCode}, {$request->url}");
+                Logger::$method("{$request->count} * Network request: {$request->status}, {$request->url} (Size: {$request->length})");
             }
         }
 
