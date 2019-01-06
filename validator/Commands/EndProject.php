@@ -28,6 +28,6 @@ class EndProject extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         Logger::info('Cleaning project...');
-        ServerManager::end();
+        ServerManager::stop();
     }
 }

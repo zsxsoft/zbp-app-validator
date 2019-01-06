@@ -10,6 +10,7 @@ namespace Zsxsoft\AppValidator\Commands;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Zsxsoft\AppValidator\Helpers\Logger;
@@ -29,12 +30,19 @@ class StartPipe extends Command
                 'appId',
                 InputArgument::REQUIRED,
                 'App ID or ZBA Path'
+            )
+            ->addOption(
+                'exit',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'Exit PHP test server if done',
+                true
             );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $appId = $input->getArgument("appId");
-        (new Task())->run($appId);
+        (new Task())->run($appId, $input->getOption('exit'));
     }
 }

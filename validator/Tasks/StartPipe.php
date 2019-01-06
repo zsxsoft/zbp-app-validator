@@ -21,16 +21,16 @@ use Zsxsoft\W3CValidator\W3CValidator;
 
 class StartPipe
 {
-    public function run($appId)
+    public function run($appId, $exit = true)
     {
         $type = 'plugin';
 
-        $this->startProcess('project:start --start-server=0');
+        $this->_startProcess('project:start --start-server=0');
         // Start server in background
-        $process = new MeaningfulBackgroundProcess($this->getCommandLine('server:start'));
+        $process = new MeaningfulBackgroundProcess($this->_getCommandLine('server:start'));
         $process->run();
         if (preg_match('/\.g?zba$/', $appId)) {
-            $this->startProcess('extract', $appId);
+            $this->_startProcess('extract', $appId);
             $appId = file_get_contents(TempHelper::getPath('/extracted'));
         }
 
@@ -38,32 +38,40 @@ class StartPipe
         $app = ZBPWrapper::loadApp($appId);
         $type = $app->type;
 
-        $this->startProcess('scan:variable', $appId);
-        $this->startProcess('scan:phpcc', $appId);
+        $this->_startProcess('scan:variable', $appId);
+        $this->_startProcess('scan:phpcc', $appId);
 
         if ($type == 'theme') {
-            $this->startProcess('theme:change', $appId);
-            $this->startProcess('scan:code', $appId);
-            $this->startProcess('browser');
-            $this->startProcess('scan:w3c');
+            $this->_startProcess('theme:change', $appId);
+            $this->_startProcess('scan:code', $appId);
+            $this->_startProcess('browser');
+            $this->_startProcess('scan:w3c');
         } else {
-            $this->startProcess('scan:code', $appId);
+            $this->_startProcess('scan:code', $appId);
         }
 
-        $this->startProcess('project:end');
+        $this->_done($exit);
 
     }
 
-    private function startProcess($command, $argument = '')
+    private function _done($exit = true)
+    {
+        if ($exit) {
+            $this->_startProcess('project:end');
+        }
+    }
+
+    private function _startProcess($command, $argument = '')
     {
         $return = 0;
-        passthru($this->getCommandLine($command, $argument), $return);
+        passthru($this->_getCommandLine($command, $argument), $return);
         if ($return !== 0) {
+            $this->_done(true);
             exit;
         }
     }
 
-    private function getCommandLine($command, $argument = '')
+    private function _getCommandLine($command, $argument = '')
     {
         $path = escapeshellarg(ROOT_PATH . DIRECTORY_SEPARATOR . 'checker');
         $arg = $argument === '' ? '' : escapeshellarg($argument);

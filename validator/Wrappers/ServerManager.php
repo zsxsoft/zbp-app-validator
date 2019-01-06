@@ -83,11 +83,11 @@ class ServerManager
             return;
         }
         if (function_exists('posix_kill')) {
-            posix_kill($this->pid, SIGTERM);
+            posix_kill($this->pid, 9 /* SIGKILL */);
         } else if (DIRECTORY_SEPARATOR === '\\') {
             `taskkill.exe /pid {$this->pid} /f`;
         } else {
-            `kill {$this->pid}`;
+            `kill -9 {$this->pid}`;
         }
 
         @unlink($this->pidPath);
