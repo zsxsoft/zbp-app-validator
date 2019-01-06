@@ -15,16 +15,17 @@ use Zsxsoft\AppValidator\Wrappers\ZBPWrapper;
 class ScanGlobalVariables
 {
 
-    private $store = [];
+    private $_store = [];
 
     /**
      * Load globals and save them to the store
-     * @param string $class
+     *
+     * @param string   $class
      * @param callable $callback
      */
     public function loadGlobals($class, callable $callback)
     {
-        $this->store[$class] = [
+        $this->_store[$class] = [
             "callback" => $callback,
             "data" => $callback(),
         ];
@@ -32,16 +33,19 @@ class ScanGlobalVariables
 
     /**
      * Compare new data and original data
-     * @param string $class
-     * @return array diff
+     *
+     * @param string className $class
+     *
+     * @return array
      */
     public function diffGlobals($class)
     {
-        return array_diff($this->store[$class]['callback'](), $this->store[$class]['data']);
+        return array_diff($this->_store[$class]['callback'](), $this->_store[$class]['data']);
     }
 
     /**
      * Check the name of functions
+     *
      * @param array $diff
      */
     public function checkFunctions($diff)
@@ -66,10 +70,12 @@ class ScanGlobalVariables
 
     /**
      * Check global variables / constants / class
+     *
      * @param string $class
-     * @param array $diff
+     * @param array  $diff
+     *
      * @return bool
-     */
+     **/
     public function checkOthers($class, $diff)
     {
 
@@ -89,7 +95,9 @@ class ScanGlobalVariables
 
     /**
      * Call check functions
+     *
      * @param string $class
+     *
      * @return bool
      */
     public function checkDiff($class)
@@ -114,18 +122,26 @@ class ScanGlobalVariables
 
         Logger::info('Scanning functions and global variables');
         $filename = $zbp->path . '/zb_users/' . $app->type . '/' . $app->id . '/include.php';
-        $this->loadGlobals('variables', function () {
-            return array_keys($GLOBALS);
-        });
-        $this->loadGlobals('functions', function () {
-            return get_defined_functions()['user'];
-        });
-        $this->loadGlobals('constants', function () {
-            return array_keys(get_defined_constants());
-        });
-        $this->loadGlobals('classes', function () {
-            return get_declared_classes();
-        });
+        $this->loadGlobals(
+            'variables', function () {
+                return array_keys($GLOBALS);
+            }
+        );
+        $this->loadGlobals(
+            'functions', function () {
+                return get_defined_functions()['user'];
+            }
+        );
+        $this->loadGlobals(
+            'constants', function () {
+                return array_keys(get_defined_constants());
+            }
+        );
+        $this->loadGlobals(
+            'classes', function () {
+                return get_declared_classes();
+            }
+        );
 
         $includeFlag = PHPHelper::includeFile($filename);
         if ($includeFlag === true) {

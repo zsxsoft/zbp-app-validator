@@ -15,18 +15,25 @@ use Zsxsoft\AppValidator\Helpers\ZBPHelper;
 
 /**
  * Class ZBPWrapper
+ *
  * @package Zsxsoft\AppValidator\Wrappers
- * @method static \App getApp()
- * @method static \ZBlogPHP getZbp()
+ * @method  static \App getApp()
+ * @method  static \ZBlogPHP getZbp()
  */
 class ZBPWrapper
 {
     use StaticInstance;
+
     /**
+     * Z-BlogPHP Global Object
+     *
      * @var \ZBlogPHP
      */
     protected $zbp = null;
+
     /**
+     * Z-BlogPHP App Object
+     *
      * @var \App
      */
     protected $app = null;
@@ -34,13 +41,14 @@ class ZBPWrapper
     public function __construct()
     {
         global $zbp;
-        require ZBPHelper::getPath('/zb_system/function/c_system_base.php');
+        include ZBPHelper::getPath('/zb_system/function/c_system_base.php');
         $this->zbp = $zbp;
         $zbp->Load();
     }
 
 
-    protected function getAppPath () {
+    protected function getAppPath()
+    {
         $app = self::getApp();
         return ZBPHelper::getPath() . '/zb_users/' . $app->type . '/' . $app->id . '/';
     }

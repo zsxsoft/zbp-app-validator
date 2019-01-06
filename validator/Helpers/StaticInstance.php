@@ -12,15 +12,17 @@ namespace Zsxsoft\AppValidator\Helpers;
 trait StaticInstance
 {
 
-    private static $_instance = NULL;
+    private static $_instance = null;
 
-    protected static function _initializeThis () {
+    protected static function initializeThis()
+    {
         self::$_instance = new self();
     }
 
-    public static function __callStatic($name, $arguments) {
+    public static function __callStatic($name, $arguments)
+    {
         if (is_null(self::$_instance)) {
-            self::_initializeThis();
+            self::initializeThis();
         }
         if (strtolower(substr($name, 0, 3)) == 'get' && !method_exists(self::$_instance, $name)) {
             return self::$_instance->get(lcfirst(substr($name, 3)));
@@ -28,11 +30,13 @@ trait StaticInstance
         return call_user_func_array([self::$_instance, $name], $arguments);
     }
 
-    public static function instance () {
+    public static function instance()
+    {
         return self::$_instance;
     }
 
-    protected function get ($key) {
+    protected function get($key)
+    {
         return $this->$key;
     }
 

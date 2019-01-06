@@ -1,10 +1,11 @@
 <?php
 /**
- * api
- * @author zsx<zsx@zsxsoft.com>
- * @package api/route/error
- * @php >= 5.3
- */
+ * Bootstrap
+ *
+ * @package AppChecker
+ * @author  zsx <zsx@zsxsoft.com>
+ * @php     >= 5.3
+ **/
 namespace AppChecker;
 
 use Symfony\Component\Console\Application;

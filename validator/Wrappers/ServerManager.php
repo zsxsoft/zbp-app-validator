@@ -38,17 +38,20 @@ class ServerManager
 
     protected function start()
     {
-        if (!Config::get('builtinServer')) return;
+        if (!Config::get('builtinServer')) {
+            return;
+        }
         $this->stop();
         $pipes = [];
         $listenAddress = Config::get('listenAddress');
-        $proc = proc_open('"' . PHPHelper::getBinary() . '" -S ' . $listenAddress,
+        $proc = proc_open(
+            '"' . PHPHelper::getBinary() . '" -S ' . $listenAddress,
             [
                 0 => ["pipe", "r"],
                 1 => ['file', TempHelper::getPath('/server-output.txt'), 'w'],
                 2 => ['file', TempHelper::getPath('/server-error.txt'), 'w'],
             ],
-            $pipes, ZBPHelper::getPath(), NULL,
+            $pipes, ZBPHelper::getPath() . DIRECTORY_SEPARATOR, null,
             [
                 'bypass_shell' => true
             ]
@@ -64,15 +67,21 @@ class ServerManager
         file_put_contents($this->pidPath, $pid);
         while (true) {
             sleep(10000);
-            if (!proc_get_status($proc)['running']) break;
+            if (!proc_get_status($proc)['running']) {
+                break;
+            }
         }
     }
 
     protected function stop()
     {
-        if (!Config::get('builtinServer')) return;
+        if (!Config::get('builtinServer')) {
+            return;
+        }
         $this->loadPid();
-        if ($this->pid == '') return;
+        if ($this->pid == '') {
+            return;
+        }
         if (function_exists('posix_kill')) {
             posix_kill($this->pid, SIGTERM);
         } else if (DIRECTORY_SEPARATOR === '\\') {

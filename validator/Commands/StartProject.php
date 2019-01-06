@@ -26,11 +26,12 @@ class StartProject extends Command
             ->setName('project:start')
             ->setDescription('Clean the temporary and start a new check project')
             ->addOption(
-              'start-server',
-              null,
-              InputOption::VALUE_OPTIONAL,
-              'Start PHP test server',
-              true);
+                'start-server',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'Start PHP test server',
+                true
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

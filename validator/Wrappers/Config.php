@@ -14,23 +14,24 @@ use Zsxsoft\AppValidator\Helpers\StaticInstance;
 class Config
 {
     use StaticInstance;
-    private $items = [];
+    private $_items = [];
 
     public function __construct()
     {
         try {
             $default = json_decode(file_get_contents(ROOT_PATH . '/config.default.json'), true);
             $custom = json_decode(file_get_contents(ROOT_PATH . '/config.json'), true);
-            $this->items = array_merge($default, $custom);
+            $this->_items = array_merge($default, $custom);
         } catch (\Exception $e) {
             Logger::error('Parse Config Error!');
             exit;
         }
     }
 
-    protected function get($key) {
-        if (isset($this->items[$key])) {
-            return $this->items[$key];
+    protected function get($key)
+    {
+        if (isset($this->_items[$key])) {
+            return $this->_items[$key];
         }
         return null;
     }

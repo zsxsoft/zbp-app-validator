@@ -4,7 +4,7 @@
  * User: sx
  * Date: 2017/10/23
  * Time: 19:39
- */
+ **/
 
 namespace Zsxsoft\AppValidator\Commands;
 
@@ -36,7 +36,9 @@ class ChangeTheme extends Command
     {
         $appId = $input->getArgument("appId");
         $app = ZBPWrapper::loadApp($appId);
-        if ($app->type !== 'theme') return;
+        if ($app->type !== 'theme') {
+            return;
+        }
         ZBPWrapper::changeTheme();
     }
 }

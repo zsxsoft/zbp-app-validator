@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<ruleset name="zbp-app-validator" namespace="Zsxsoft\AppValidator">
+	<description>
+		PHP Standard for zbp-app-validator
+	</description>
+	<rule ref="PEAR">
+		<exclude name="PEAR.Commenting.FileComment.Missing" />
+		<exclude name="PEAR.Commenting.FileComment.MissingCategoryTag" />
+		<exclude name="PEAR.Commenting.FileComment.MissingPackageTag" />
+		<exclude name="PEAR.Commenting.FileComment.MissingAuthorTag" />
+		<exclude name="PEAR.Commenting.FileComment.MissingLinkTag" />
+		<exclude name="PEAR.Commenting.FileComment.MissingLicenseTag" />
+		<exclude name="PEAR.Commenting.ClassComment.Missing" />
+		<exclude name="PEAR.Commenting.FunctionComment.Missing" />
+		<exclude name="PEAR.Commenting.InlineComment.Missing" />
+		<exclude name="PEAR.Commenting.FunctionComment.MissingParamComment" />
+		<exclude name="PEAR.Commenting.FunctionComment.Missing" />
+		<exclude name="PEAR.Commenting.FunctionComment.MissingReturn" />
+		<exclude name="PEAR.Commenting.FunctionComment.MissingParamTag" />
+	</rule>
+	<rule ref="Generic.Files.LineLength">
+		<properties>
+			<property name="lineLimit" value="120" />
+			<property name="absoluteLineLimit" value="0" />
+		</properties>
+	</rule>
+</ruleset>

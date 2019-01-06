@@ -54,11 +54,13 @@ class StartPipe
 
     }
 
-    private function startProcess($command, $argument = '') {
+    private function startProcess($command, $argument = '')
+    {
         passthru($this->getCommandLine($command, $argument));
     }
 
-    private function getCommandLine($command, $argument = '') {
+    private function getCommandLine($command, $argument = '')
+    {
         $path = escapeshellarg(ROOT_PATH . DIRECTORY_SEPARATOR . 'checker');
         $arg = $argument === '' ? '' : escapeshellarg($argument);
         return '"' . PHPHelper::getBinary() . "\" $path $command $arg";

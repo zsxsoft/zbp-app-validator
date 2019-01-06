@@ -27,7 +27,7 @@ class RunBrowser
             } else {
                 $path = '/node_modules/electron/dist/electron';
             }
-          $electronPath = PathHelper::getAbsoluteFilename(ROOT_PATH . $path);
+            $electronPath = PathHelper::getAbsoluteFilename(ROOT_PATH . $path);
         }
         $javascriptPath = PathHelper::getAbsoluteFilename(ROOT_PATH . '/javascript/browser/browser.js');
 

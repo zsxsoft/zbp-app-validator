@@ -14,7 +14,8 @@ class zhCN
 {
     use StaticInstance;
 
-    protected function translate ($text) {
+    protected function translate($text)
+    {
         return $text;
     }
 }

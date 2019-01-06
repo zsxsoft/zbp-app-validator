@@ -16,7 +16,7 @@ class NameChecker extends \PhpParser\NodeVisitorAbstract
     public $ret = [];
     public function leaveNode(Node $node)
     {
-        $name = NULL;
+        $name = null;
 
         if ($node instanceof Node\Name) {
             $name = $node->toString('');
@@ -27,7 +27,9 @@ class NameChecker extends \PhpParser\NodeVisitorAbstract
         } else if ($node instanceof Node\Expr\ShellExec) {
             $name = 'shell_exec';
         }
-        if (is_null($name)) return $node;
+        if (is_null($name)) {
+            return $node;
+        }
 
         $line = $node->getAttribute('startLine');
         $type = '';

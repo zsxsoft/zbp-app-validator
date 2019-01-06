@@ -20,7 +20,9 @@ class PathHelper
 
         foreach (preg_split($regEx, $filename) as $part) {
             // ignore parts that have no value
-            if (empty($part) || $part === '.') continue;
+            if (empty($part) || $part === '.') {
+                continue;
+            }
 
             if ($part !== '..') {
                 // cool, we found a new part
@@ -32,7 +34,7 @@ class PathHelper
                 // now, here we don't like
                 throw new \Exception('Climbing above the root is not permitted.');
             }
-	    }
+        }
 
         if (DIRECTORY_SEPARATOR !== '\\') {
             array_unshift($path, '');

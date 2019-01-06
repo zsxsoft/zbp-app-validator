@@ -22,7 +22,8 @@ class ZBPHelper
         $this->path = $zbpPath == false ? TempHelper::getPath('/web') : $zbpPath;
     }
 
-    protected function getPath ($path = NULL) {
+    protected function getPath($path = null)
+    {
         return PathHelper::getAbsoluteFilename($this->path . (is_null($path) ? '' : $path));
     }
 

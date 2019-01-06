@@ -15,21 +15,21 @@ use Zsxsoft\AppValidator\Wrappers\Config;
 
 /**
  * Class Logger
- * @package Zsxsoft\AppValidator\Helpers
- * @method static log($level, $message, array $context = array())
- * @method static debug($message, array $context = array())
- * @method static info($message, array $context = array())
- * @method static notice($message, array $context = array())
- * @method static warn($message, array $context = array())
- * @method static warning($message, array $context = array())
- * @method static err($message, array $context = array())
- * @method static error($message, array $context = array())
- * @method static crit($message, array $context = array())
- * @method static critical($message, array $context = array())
- * @method static alert($message, array $context = array())
- * @method static emerg($message, array $context = array())
- * @method static emergency($message, array $context = array())
  *
+ * @package Zsxsoft\AppValidator\Helpers
+ * @method  static log($level, $message, array $context = array())
+ * @method  static debug($message, array $context = array())
+ * @method  static info($message, array $context = array())
+ * @method  static notice($message, array $context = array())
+ * @method  static warn($message, array $context = array())
+ * @method  static warning($message, array $context = array())
+ * @method  static err($message, array $context = array())
+ * @method  static error($message, array $context = array())
+ * @method  static crit($message, array $context = array())
+ * @method  static critical($message, array $context = array())
+ * @method  static alert($message, array $context = array())
+ * @method  static emerg($message, array $context = array())
+ * @method  static emergency($message, array $context = array())
  */
 class Logger
 {
@@ -50,7 +50,7 @@ class Logger
     public function __call($name, $arguments)
     {
         if (count($arguments) == 1 || count($arguments) == 2) {
-            $arguments[0] = $this->translateLanguage($arguments[0]);
+            $arguments[0] = $this->_translateLanguage($arguments[0]);
         }
         call_user_func_array([$this->log, $name], $arguments);
     }
@@ -64,7 +64,7 @@ class Logger
      *  -  Windows != 10.0.10586 without Ansicon, ConEmu or Mintty
      *  -  non tty consoles
      *
-     * @see https://github.com/symfony/console/blob/master/Output/StreamOutput.php#L81
+     * @see    https://github.com/symfony/console/blob/master/Output/StreamOutput.php#L81
      * @return bool true if the stream supports colorization, false otherwise
      */
     protected function hasColorSupport()
@@ -80,7 +80,7 @@ class Logger
         return true;//function_exists('posix_isatty');
     }
 
-    private function translateLanguage($original)
+    private function _translateLanguage($original)
     {
         $lang = str_replace('-', '', Config::Get('language'));
         $class = 'Zsxsoft\\AppValidator\\Languages\\' . $lang;

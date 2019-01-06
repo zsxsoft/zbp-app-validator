@@ -29,12 +29,13 @@ class PHPCompatibility
 
         Logger::info('Running PHPCompatibility..');
         Logger::info("Version: $minimumPHPVersion to latest");
-        $output = trim(shell_exec(
-            '"' . PHPHelper::getBinary() . '"' . ' ' .
-            escapeshellarg(PathHelper::getAbsoluteFilename(ROOT_PATH . '/vendor/squizlabs/php_codesniffer/bin/phpcs')) . ' ' .
-            " --standard=PHPCompatibility --runtime-set testVersion $minimumPHPVersion- --report=json -p " .
-            escapeshellarg(ZBPWrapper::getAppPath())
-          )
+        $output = trim(
+            shell_exec(
+                '"' . PHPHelper::getBinary() . '"' . ' ' .
+                escapeshellarg(PathHelper::getAbsoluteFilename(ROOT_PATH . '/vendor/squizlabs/php_codesniffer/bin/phpcs')) . ' ' .
+                " --standard=PHPCompatibility --runtime-set testVersion $minimumPHPVersion- --report=json -p " .
+                escapeshellarg(ZBPWrapper::getAppPath())
+            )
         );
 
         $output = substr($output, strpos($output, '(100%)') + 6);
@@ -55,7 +56,9 @@ class PHPCompatibility
 
         foreach ($data->files as $fileName => $file) {
             foreach ($file->messages as $error) {
-                if (in_array($error->source, ["Internal.Tokenizer.Exception", "Internal.NoCodeFound"])) continue;
+                if (in_array($error->source, ["Internal.Tokenizer.Exception", "Internal.NoCodeFound"])) {
+                    continue;
+                }
                 Logger::error($fileName . ': ');
                 Logger::error("Line {$error->line}: {$error->message}");
                 $sum++;

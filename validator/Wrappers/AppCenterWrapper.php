@@ -53,21 +53,25 @@ class AppCenterWrapper
         if (isset($GLOBALS['blogversion'])) {
             $u = 'ZBlogPHP/' . $GLOBALS['blogversion'] . ' AppCentre/' . $app->modified . ' ' . $currentUserAgent;
         } else {
-            $u = 'ZBlogPHP/' . substr(ZC_BLOG_VERSION, -6,
-                6) . ' AppCentre/' . $app->modified . ' ' . $currentUserAgent;
+            $u = 'ZBlogPHP/' . substr(
+                ZC_BLOG_VERSION, -6,
+                6
+            ) . ' AppCentre/' . $app->modified . ' ' . $currentUserAgent;
         }
         return $u;
     }
 
     protected function newHttpClient()
     {
-        return new \GuzzleHttp\Client([
-          'base_uri' => $this->config['api'],
-          'cookies' => $this->cookie,
-          'headers' => [
+        return new \GuzzleHttp\Client(
+            [
+            'base_uri' => $this->config['api'],
+            'cookies' => $this->cookie,
+            'headers' => [
             'User-Agent' => $this->buildUserAgent()
-          ]
-        ]);
+            ]
+            ]
+        );
     }
 
     protected function getAppServerId($appId)

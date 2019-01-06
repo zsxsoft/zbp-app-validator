@@ -25,15 +25,15 @@ use Zsxsoft\AppValidator\Wrappers\ZBPWrapper;
 
 class ScanStaticCode
 {
-    private $file = "";
-    private $path = "";
+    private $_file = "";
+    private $_path = "";
 
     /**
      * Check unsafe functions
      */
     public function checkFunctions()
     {
-        $outputter = new ErrorOutputter($this->path);
+        $outputter = new ErrorOutputter($this->_path);
         $checker = new NameChecker();
         $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
         $traverser = new NodeTraverser();
@@ -41,13 +41,13 @@ class ScanStaticCode
         $traverser->addVisitor($checker);
         $nodeDumper = new NodeDumper;
         try {
-            $stmts = $parser->parse($this->file);
+            $stmts = $parser->parse($this->_file);
             $stmts = $traverser->traverse($stmts);
             foreach ($checker->ret as $item) {
                 $outputter->{$item['type'] . '_'}($item);
             }
         } catch (\PhpParser\Error $e) {
-            Logger::error("Parse {$this->path} Error.");
+            Logger::error("Parse {$this->_path} Error.");
             Logger::error($e->getMessage());
         }
     }
@@ -59,8 +59,8 @@ class ScanStaticCode
     {
         $regex = "/[\"']rand\(\)[\"'][ \t]*?\=\>[\"'][ \t]*?[\"']|ORDER[ \t]*BY[\t ]*rand\(/i";
         $matches = null;
-        if (preg_match($regex, $this->file)) {
-            Logger::warning('Maybe using rand() in MySQL in ' . $this->path);
+        if (preg_match($regex, $this->_file)) {
+            Logger::warning('Maybe using rand() in MySQL in ' . $this->_path);
             Logger::warning('You should remove it.');
         }
     }
@@ -70,11 +70,11 @@ class ScanStaticCode
      */
     public function checkCSRFToken()
     {
-        if (preg_match("/<form/", $this->file) && preg_match('/\.php/i', $this->path)) {
+        if (preg_match("/<form/", $this->_file) && preg_match('/\.php/i', $this->_path)) {
             $regex = "/(GetCSRFToken|BuildSafeURL|BuildSafeCmdURL)/i";
-            if (!preg_match($regex, $this->file)) {
+            if (!preg_match($regex, $this->_file)) {
                 Logger::warning('Maybe no CSRF protection in backend!');
-                Logger::warning($this->path);
+                Logger::warning($this->_path);
             }
         }
     }
@@ -82,13 +82,14 @@ class ScanStaticCode
 
     /**
      * Run Checker
-     * @param string $path
+     *
+     * @param string $filePath
      */
     public function runChecker($filePath)
     {
         // Logger::info("Scanning $filePath");
-        $this->path = $filePath;
-        $this->file = file_get_contents($this->path);
+        $this->_path = $filePath;
+        $this->_file = file_get_contents($this->_path);
         $this->checkOrderByRand();
         $this->checkFunctions();
         $this->checkCSRFToken();
@@ -107,7 +108,9 @@ class ScanStaticCode
         }
         if ($app->type === 'theme') {
             $compiledDir = ZBPHelper::getPath() . '/zb_users/cache/compiled/' . $app->id . '/';
-            if (!is_dir($compiledDir)) return;
+            if (!is_dir($compiledDir)) {
+                return;
+            }
             foreach (PathHelper::scanDirectory($compiledDir) as $index => $value) {
                 $this->runChecker(PathHelper::getAbsoluteFilename($value));
             }
