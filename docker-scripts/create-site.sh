@@ -26,7 +26,7 @@ mkdir /data/logs/nginx/${sitename}
 chown -R www-data:${sitename} /data/logs/nginx/${sitename}
 # Website
 mkdir ${data}
-mkdir -p ${data}/www ${data}/bin ${data}/dev ${data}/tmp ${data}/lib ${data}/etc/ ${data}/home/
+mkdir -p ${data}/www ${data}/www/blog ${data}/bin ${data}/dev ${data}/tmp ${data}/lib ${data}/etc/ ${data}/home/
 mkdir -p ${data}/usr/sbin/ ${data}/usr/share/zoneinfo/ ${data}/var/run/nscd/
 mkdir -p ${data}/var/lib/php/sessions
 cp -a /dev/zero /dev/urandom /dev/null ${data}/dev/
