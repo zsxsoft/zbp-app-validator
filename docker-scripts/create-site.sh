@@ -71,7 +71,7 @@ pm.start_servers = 2
 pm.min_spare_servers = 1
 pm.max_spare_servers = 3
 chroot = /data/www/${sitename}
-chdir = /www\" > /etc/php/7.3/fpm/pool.d/${sitename}.conf"
+chdir = /www\" > /etc/php/7.2/fpm/pool.d/${sitename}.conf"
 bash -c "echo \"server {
     listen 80 default_server;
     listen 443 ssl http2 default_server;
