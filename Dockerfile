@@ -19,7 +19,7 @@ RUN export NODEJS_HOST=https://nodejs.org/dist/; if [ "x$location" = "xchina" ];
 # nginx & PHP
     && LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php \
     && apt-get update \
-    && apt-get -y install nginx php7.3-fpm php7.3-gd php7.3-curl php7.3-mysql php7.3-cli php7.3-xml php7.3-json php7.3-mbstring php7.3-cli php7.3-sqlite3 php7.3-zip \
+    && apt-get -y install nginx php7.2-fpm php7.2-gd php7.2-curl php7.2-mysql php7.2-cli php7.2-xml php7.2-json php7.2-mbstring php7.2-cli php7.2-sqlite3 php7.2-zip \
     && rm -rf /etc/nginx/sites-enabled/default \
     && curl https://getcomposer.org/installer | php -- --filename=composer \
     && chmod a+x composer \

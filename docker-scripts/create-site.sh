@@ -60,7 +60,7 @@ ln -s /data/certs ${data}/home/.mitmproxy
 bash -c "echo \"[${sitename}]
 user = ${sitename}
 group = ${sitename}
-listen = /var/run/php73-fpm-${sitename}.sock
+listen = /var/run/php72-fpm-${sitename}.sock
 listen.owner = www-data
 listen.group = www-data
 php_admin_value[disable_functions] = exec,passthru,shell_exec,system
