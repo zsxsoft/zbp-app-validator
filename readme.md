@@ -33,7 +33,10 @@ Z-BlogPHP App 机器审核工具
 ## 使用
 
 ### Docker
-TO BE DONE...
+```bash
+docker build . --tag=zbp-app-validator
+docker run --privileged --rm -it zbp-app-validator /zbp-app-validator/docker-scripts/run.sh help
+```
 
 ### 客户端直接运行
 
