@@ -1,12 +1,9 @@
 const path = require('path')
 const cp = require('child_process')
 const config = require('../shared/config')
-const currentElectronPath = typeof(require('electron')) === 'string' ? require('electron') : require('electron').app.getPath('exe')
 const crypto = require('crypto')
 
-const nightmare = cp.spawn(currentElectronPath, [path.join(__dirname, '/child-process')], {
-  stdio: [0, 2, 2, 'ipc'],
-}) // fork has bug in electron
+const nightmare = cp.fork(path.join(__dirname, '/child-process'))
 
 const map = {
   console: new Map(),
