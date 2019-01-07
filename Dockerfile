@@ -67,7 +67,7 @@ RUN if [ "x$location" = "xchina" ]; then composer config -g repo.packagist compo
 COPY ./ /zbp-app-validator/
 RUN chmod 0777 /zbp-app-validator/docker-scripts/* \
     && bash /zbp-app-validator/docker-scripts/docker-init.sh \
-    && bash /zbp-app-validator/docker-scripts/create-site.sh local localhost
+    && bash /zbp-app-validator/docker-scripts/create-site.sh local zblogphp.local
 
 ENV DISPLAY=:99.0
 ENV HOME=/data/www/local/home

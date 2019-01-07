@@ -34,15 +34,18 @@ Z-BlogPHP App 机器审核工具
 
 ### Docker
 ```bash
+git clone https://github.com/zsxsoft/zbp-app-validator
+cd zbp-app-validator
+# 中国大陆用户可加上『--build-arg="location=china"』以使用国内镜像源构建
 docker build . --tag=zbp-app-validator
-docker run --privileged --rm -it zbp-app-validator /zbp-app-validator/docker-scripts/run.sh help
+docker run --rm -it zbp-app-validator /zbp-app-validator/docker-scripts/run.sh help
 ```
 
 ### 客户端直接运行
 
 #### 前置条件
 1. Windows 7+ / macOS 10.10+ / Linux。
-1. 安装了Java Runtime和PHP。
+1. 已安装 Java 8 / PHP 7 / Nodejs 10。
 
 #### GUI
 Windows用户直接双击``launcher.exe``即可直接使用GUI。其它系统的GUI正在编写启动器，可使用``npm start``打开GUI。
