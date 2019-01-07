@@ -21,10 +21,12 @@
     "debug": "^4.1.0",
     "deep-assign": "^3.0.0",
     "element-theme": "^2.0.1",
-    "element-ui": "^2.2.1",
+    "element-ui": "^2.4.11",
     "express": "^4.16.4",
     "normalize.css": "^8.0.0",
     "puppeteer": "^1.11.0",
+    "socket.io": "^2.2.0",
+    "socket.io-client": "^2.2.0",
     "vue": "^2.5.16",
     "xterm": "^3.2.0"
   },

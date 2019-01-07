@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="../../node_modules/xterm/dist/xterm.css" />
-  <link rel="stylesheet" href="element/index.css">
+  <link rel="stylesheet" href="/node_modules/xterm/dist/xterm.css" />
+  <link rel="stylesheet" href="/node_modules/element-ui/lib/theme-chalk/index.css">
 
   <link rel="stylesheet" href="index.css" />
 
@@ -21,19 +21,23 @@
             <el-form>
               <el-form-item label="PHP路径">
                 <el-input placeholder="不填写将使用环境变量内的PHP" v-model="input.phpPath" class="input-with-select" >
-                  <el-button slot="append" @click="browsePHPPath">浏览</el-button>
                 </el-input>
               </el-form-item>
               <el-form-item label="待审核应用ID / zba">
                 <el-input v-model="input.appPath" class="input-with-select">
-                    <el-button slot="append" @click="browseAppId">浏览</el-button>
+                  <el-upload slot="append"
+                    action="/api/upload"
+                    :limit="1">
+                    <el-button size="small" type="primary">点击上传</el-button>
+                  </el-upload>
+                  <!--<el-button slot="append" @click="browseAppId">浏览</el-button>-->
                 </el-input>
               </el-form-item>
               <el-form-item>
                   <el-button type="success" @click="doAudit" :disabled="disableAuditButton">立即审核</el-button>
               </el-form-item>
               <el-form-item>
-                  <el-switch v-model="config.builtinServer" active-color="#13ce66" inactive-color="#ff4949" active-text="自行配置服务器" inactive-text="使用审核器内置服务器">
+                  <el-switch v-model="config.builtinServer" active-color="#13ce66" inactive-color="#ff4949" active-text="使用审核器内置服务器" inactive-text="自行配置服务器">
                 </el-switch>
               </el-form-item>
               <el-form-item label="网站地址" v-if="!config.builtinServer">
@@ -41,7 +45,6 @@
               </el-form-item>
               <el-form-item label="Z-BlogPHP文件夹" v-if="!config.builtinServer">
                 <el-input v-model="config.zbpPath" class="input-with-select" >
-                  <el-button slot="append" @click="browseZBPPath">浏览</el-button>
                 </el-input>
               </el-form-item>
             </el-form>
@@ -60,8 +63,11 @@
     </el-container>
   </div>
 
-  <script src="../../node_modules/xterm/dist/xterm.js"></script>
-  <script src="../../node_modules/xterm/dist/addons/attach/attach.js"></script>
+  <script src="/node_modules/socket.io-client/dist/socket.io.js"></script>
+  <script src="/node_modules/xterm/dist/xterm.js"></script>
+  <script src="/node_modules/xterm/dist/addons/attach/attach.js"></script>
+  <script src="/node_modules/vue/dist/vue.min.js"></script>
+  <script src="/node_modules/element-ui/lib/index.js"></script>
   <script src="index.js"></script>
 </body>
 </html>

@@ -1,31 +1,10 @@
-(() => {
-  const Module = require('module')
-  const origRequire = Module._load
-  Module._load = function (request, parent, isMain) {
-    if (request === 'vue') { // element-ui will load Vue..
-      request = 'vue/dist/vue.common.js'
-    }
-    return origRequire(request, parent, isMain)
-  }
-})();
+(async () => {
+  const initialData = await fetch('/api/config').then(p => p.json())
+  const { config, defaultConfig } = initialData
+  const socket = io()
 
-(() => {
-  const Vue = require('vue')
-  const ElementUI = require('element-ui')
-
-  const { dialog, getCurrentWindow, process, shell } = require('electron').remote
-  const { spawn, exec } = require('child_process')
-  // const fontManager = require('font-manager')
-  const { join } = require('path')
-  const { readFileSync, writeFileSync } = require('fs')
-  const rootPath = join(__dirname, '../../')
-  const configPath = join(rootPath, '/config.json')
-  const config = require('../shared/config')
-  const defaultConfig = JSON.parse(readFileSync(join(rootPath, '/config.default.json'), 'utf-8'))
-  const currentWindow = getCurrentWindow()
-  const argv = process.argv
-  // const fontFamilies = fontManager.getAvailableFontsSync().map(p => p.family)
-  // const monoFonts = ['Source Code Pro', 'Noto Mono', 'DejaVu Sans Mono', 'Monospace', 'Consolas'].filter(p => fontFamilies.includes(p))
+  const parseHash = () => location.hash.substr(1).split('&').map(v => v.split('=')).reduce( (pre, [key, value]) => ({ ...pre, [key]: decodeURIComponent(value) }), {} )
+  let options = parseHash()
 
   const term = new Terminal()
   const calculateTermSize = () => {
@@ -40,7 +19,7 @@
     term.resize(Math.floor(innerWidth / fontSize), Math.floor(innerHeight / lineHeight))
   }
   const saveConfig = newConfig => {
-    const savingConfig = JSON.parse(readFileSync(configPath, 'utf-8'))
+    const savingConfig = Object.assign({}, config)
     const keys = ['builtinServer', 'host', 'zbpPath']
     let saveFlag = false
     if (newConfig.builtinServer && !savingConfig.builtinServer) {
@@ -56,15 +35,17 @@
     }
     console.log(savingConfig)
     if (saveFlag) {
-      writeFileSync(configPath, JSON.stringify(savingConfig), 'utf-8')
+      socket.emit('saveConfig', JSON.stringify(saveConfig))
     }
   }
 
-  currentWindow.setIcon(join(rootPath, 'resources/Logo.png'))
   window.term = term
   window.addEventListener('resize', calculateTermSize)
+  window.addEventListener('hashchange', () => {
+    options = parseHash()
+  })
 
-  Vue.use(ElementUI)
+  Vue.use(ELEMENT)
   const app = new Vue({
     el: '#app',
     data: {
@@ -73,76 +54,44 @@
         phpPath: '',
         appPath: ''
       },
+      fileList: [],
       disableAuditButton: false
     },
-    mounted () {
-      if (argv.length >= 2) {
-        this.input.appPath = argv[2]
+    mounted() {
+      if (options.path) {
+        this.input.appPath = options.path
       }
+      this.input.phpPath = this.config.phpPath
       term.open(document.getElementById('terminal'), false)
-//      if (monoFonts.length > 0) {
-//        term.setOption('fontFamily', monoFonts[0])
-//      }
       term.writeln('Terminal...')
       calculateTermSize()
+
+      socket.on('term', (data) => {
+        term.write(data)
+      })
+      socket.on('exit-term', () => {
+        this.disableAuditButton = false
+      })
     },
     methods: {
-      openBrowser (url) {
-        shell.openExternal(url)
+      openBrowser(url) {
+        socket.emit('openBrowser', url)
       },
-      startLauncher (arg) {
-        exec(join(rootPath, 'launcher') + ` ${arg}`)
+      startLauncher(arg) {
+        socket.emit('startLauncher', arg)
       },
-      browsePHPPath () {
-        dialog.showOpenDialog(currentWindow, {
-          filters: [
-            {name: 'PHP Executable (php.exe, php)', extensions: ['php.exe', 'php']},
-            {name: 'All Files', extensions: ['*']}
-          ]
-        }, paths => {
-          if (paths && paths.length) {
-            this.input.phpPath = paths[0]
-          }
-        })
-      },
-      browseAppId () {
-        dialog.showOpenDialog(currentWindow, {
-          filters: [
-            {name: 'zba file (.zba, .gzba)', extensions: ['zba', 'gzba']}
-          ]
-        }, paths => {
-          if (paths && paths.length) {
-            this.input.appPath = paths[0]
-          }
-        })
-      },
-      browseZBPPath () {
-        dialog.showOpenDialog(currentWindow, {
-          properties: ['openDirectory']
-        }, paths => {
-          if (paths && paths.length) {
-            this.config.zbpPath = paths[0]
-          }
-        })
-      },
-      doAudit () {
+      doAudit() {
         saveConfig(this.config)
         const phpPath = this.input.phpPath.trim() === '' ? 'php' : this.input.phpPath
         this.disableAuditButton = true
         term.clear()
-        const p = spawn(phpPath, ['checker', 'start', this.input.appPath], {
-          env: {
-            'term': 'xterm'
-          },
-          shell: true
-        })
-        p.stdout.on('data', buf => term.write(buf.toString().replace(/\n/g, '\r\n')))
-        p.stderr.on('data', buf => term.write(buf.toString().replace(/\n/g, '\r\n')))
-        p.on('exit', () => {
-          this.disableAuditButton = false
+        socket.emit('startChecker', {
+          phpPath: this.input.phpPath,
+          appPath: this.input.appPath
         })
       }
     }
   })
 
 })()
+

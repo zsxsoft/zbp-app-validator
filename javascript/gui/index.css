@@ -1,9 +1,6 @@
 html, body {
   min-height: 100%;
 }
-::selection {
-  background: transparent;
-}
 * {
   font-family: Sasara UI SC,-apple-system,BlinkMacSystemFont,Segoe UI,Dengxian,system-ui,Roboto,Helvetica Neue,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei Light,Microsoft YaHei,sans-serif;
   -webkit-font-smoothing: subpixel-antialiased;
@@ -28,12 +25,10 @@ body, .app {
   color: #fff;
 }
 
-/*
-.el-button:hover, .el-button:focus {
-  background-color: rgb(179, 181, 184);
-}
-*/
-
 .el-input__inner:focus {
   border-color: #d6e1ec;
+}
+
+.el-upload-list, .el-upload-list--text {
+  display: none;
 }
