@@ -8,7 +8,7 @@ echo '127.0.0.1 zblogphp.local' >> /etc/hosts
 mysql -u root --password=rootpassword --execute="create database userdb;"
 mysql -u root --password=rootpassword --execute="CREATE USER 'user'@'localhost' IDENTIFIED BY 'userpassword';"
 mysql -u root --password=rootpassword --execute="grant all privileges on userdb.* to user@localhost ;"
-mysql -u user --password=userpassword -Duserdb < /zbp-app-validator/docker-scripts/data/data.sql
+mysql -u user --password=userpassword --default-character-set=utf8mb4 -Duserdb < /zbp-app-validator/docker-scripts/data/data.sql
 bash -c "echo \"gzip on;
 gzip_disable \\\"msie6\\\";
 gzip_vary on;
