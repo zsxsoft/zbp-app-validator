@@ -32,19 +32,25 @@ Z-BlogPHP App 机器审核工具
 
 ## 使用
 
-### 前置条件
+### Docker
+TO BE DONE...
+
+### 客户端直接运行
+
+#### 前置条件
 1. Windows 7+ / macOS 10.10+ / Linux。
 1. 安装了Java Runtime和PHP。
 
-### GUI
+#### GUI
 Windows用户直接双击``launcher.exe``即可直接使用GUI。其它系统的GUI正在编写启动器，可使用``npm start``打开GUI。
 
 Ubuntu用户需要``sudo apt-get install libfontconfig-dev``，其他系统类推。
 
-### 命令行
+#### 命令行
 ```bash
 php checker help
 ```
+
 ## 功能Roadmap
 
 ### 尚未实现
