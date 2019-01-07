@@ -10,5 +10,6 @@ if [ $? -ne 0 ]; then
 fi
 
 cd /zbp-app-validator
-mkdir tmp && chmod -R 0777 tmp
+mkdir tmp
+chmod -R 0777 tmp
 exec sudo -u local php checker $@

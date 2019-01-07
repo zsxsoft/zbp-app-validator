@@ -43,11 +43,18 @@ ln -s /data/www/${sitename}/www/ /www/${sitename}
 
 # Cert
 mkdir /data/certs/${sitename}
+echo "authorityKeyIdentifier=keyid,issuer
+basicConstraints=CA:FALSE
+keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = ${url}" > /data/certs/${sitename}/v3.ext
 openssl genrsa -out /data/certs/${sitename}/ssl-key.pem 2048
 openssl rsa -in /data/certs/${sitename}/ssl-key.pem -out /data/certs/${sitename}/ssl-key-unsecure.pem
 openssl req -newkey rsa:2048 -keyout /data/certs/${sitename}/ssl-key-unsecure.pem -out /data/certs/${sitename}/ssl-key.req -nodes -subj "/C=US/ST=Denial/L=Springfield/O=Dis/CN=${url}"
 
-HOME=${data}/home openssl x509 -req -in /data/certs/${sitename}/ssl-key.req -CA /data/certs/mitmproxy-ca-cert.pem -CAkey /data/certs/mitmproxy-ca.pem -CAcreateserial -days 10 -out /data/certs/${sitename}/ssl.pem
+HOME=${data}/home openssl x509 -req -in /data/certs/${sitename}/ssl-key.req -CA /data/certs/mitmproxy-ca-cert.pem -CAkey /data/certs/mitmproxy-ca.pem -CAcreateserial -days 10 -out /data/certs/${sitename}/ssl.pem -extfile /data/certs/${sitename}/v3.ext
 cat /data/certs/${sitename}/ssl.pem /data/certs/mitmproxy-ca-cert.pem > /data/certs/${sitename}/ssl-fullchain.pem
 mkdir -p ${data}/home/.pki/nssdb
 certutil -d ${data}/home/.pki/nssdb -N --empty-password
