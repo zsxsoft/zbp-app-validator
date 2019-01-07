@@ -37,7 +37,7 @@ async function runBrowser () {
       runQueue()
     })
   }
-  console.log(`Loading ${device.name} with ${url}`)
+  process.stderr.write(`Loading ${device.name} with ${url}\n`)
   debug(`loading ${device.name} with ${url}`)
   const { viewport, userAgent } = device
 
