@@ -31,7 +31,7 @@ RUN export NODEJS_HOST=https://nodejs.org/dist/; if [ "x$location" = "xchina" ];
 # Java
     && apt-get -y install openjdk-8-jre \
 # Chromium
-    && apt-get -y install xvfb libgtkextra-dev libgconf2-dev libnss3 libasound2 libxtst-dev libxss1 \
+    && apt-get -y install libnss3 libnss3-tools libasound2 libxss1 \
 # MySQL
     && bash -c "debconf-set-selections <<< 'mysql-server mysql-server/root_password password rootpassword'" \
     && bash -c "debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password rootpassword'" \
@@ -39,7 +39,7 @@ RUN export NODEJS_HOST=https://nodejs.org/dist/; if [ "x$location" = "xchina" ];
     && mkdir /var/run/mysqld \
     && chown -R mysql:mysql /var/lib/mysql /var/run/mysqld \
 # strace & tshark
-    && apt-get -y install libnss3-tools strace tshark \
+    && apt-get -y install strace tshark \
 # mitmproxy
     && wget https://github.com/mitmproxy/mitmproxy/releases/download/v4.0.1/mitmproxy-4.0.1-linux.tar.gz -O/tmp/mitmproxy.tar.gz \
     && tar -C /usr/local/bin -xvf /tmp/mitmproxy.tar.gz \
@@ -69,7 +69,6 @@ RUN chmod 0777 /zbp-app-validator/docker-scripts/* \
     && bash /zbp-app-validator/docker-scripts/docker-init.sh \
     && bash /zbp-app-validator/docker-scripts/create-site.sh local zblogphp.local
 
-ENV DISPLAY=:99.0
 ENV HOME=/data/www/local/home
 
 VOLUME ["/var/lib/mysql/", "/data/www/local/www/"]

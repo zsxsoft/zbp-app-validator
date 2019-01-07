@@ -5,8 +5,8 @@ const defaultConfig = require('../../config.default')
 defaultConfig.rootPath = path.join(__dirname, '../../')
 defaultConfig.tempPath = path.join(defaultConfig.rootPath, '/tmp')
 
-if (fs.existsSync('../../config.json')) {
-  const userConfig = require('../../config')
+if (fs.existsSync(path.join(defaultConfig.rootPath, '/config.json'))) {
+  const userConfig = require(path.join(defaultConfig.rootPath, '/config.json'))
   module.exports = deepAssign({}, defaultConfig, userConfig)
 } else {
   module.exports = defaultConfig

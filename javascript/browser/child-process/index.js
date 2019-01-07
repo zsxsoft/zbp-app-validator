@@ -10,9 +10,6 @@ let finishedDevices = 0
 
 const queue = []
 const screenshotPath = path.join(config.tempPath, '/screenshot')
-
-const currentElectronPath = typeof(require('electron')) === 'string' ? require('electron') : require('electron').app.getPath('exe')
-
 if (!fs.existsSync(screenshotPath)) {
   fs.mkdirSync(screenshotPath)
 }
