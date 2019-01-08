@@ -78,7 +78,12 @@ async function runBrowser () {
     }
   })
   page.on('pageerror', (e) => {
-    console.log(e)
+    const type = 'error'
+    const text = e.message + '\n' + e.stack
+    if (process.send) {
+      process.send({type: 'console', data: {type, text, url, device: device.name}})
+    }
+    debug(`get error: ${type}: ${text}`)
   })
 
 

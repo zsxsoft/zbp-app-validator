@@ -12,4 +12,9 @@ fi
 cd /zbp-app-validator
 mkdir tmp
 chmod -R 0777 tmp
+if [ -f tmp/config.json ]; then
+  echo "Found custom config.json"
+  cp tmp/config.json .
+fi
+
 exec sudo -u local php checker $@

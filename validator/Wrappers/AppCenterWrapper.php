@@ -29,20 +29,15 @@ class AppCenterWrapper
 
     protected function buildCookieJar()
     {
+        $host = parse_url($this->config['api'], PHP_URL_HOST);
         $cookies = [];
         if ($this->config['protocol'] == 'token-as-username') {
             $cookies = [
-              'username' => $this->config['username'],
-              'password' => $this->config['password']
+              'username' => urlencode($this->config['username']),
+              'password' => urlencode($this->config['password'])
             ];
         }
-        foreach ($cookies as $name => $value) {
-            $set = new SetCookie();
-            $set->setName($name);
-            $set->setValue($value);
-            $set->setSecure(true);
-            $this->cookie->setCookie($set);
-        }
+        $this->cookie = CookieJar::fromArray($cookies, $host);
     }
 
     protected function buildUserAgent()
@@ -63,15 +58,13 @@ class AppCenterWrapper
 
     protected function newHttpClient()
     {
-        return new \GuzzleHttp\Client(
-            [
+        return new \GuzzleHttp\Client([
             'base_uri' => $this->config['api'],
             'cookies' => $this->cookie,
             'headers' => [
-            'User-Agent' => $this->buildUserAgent()
+                'User-Agent' => $this->buildUserAgent()
             ]
-            ]
-        );
+        ]);
     }
 
     protected function getAppServerId($appId)
