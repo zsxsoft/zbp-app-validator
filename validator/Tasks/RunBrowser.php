@@ -30,14 +30,12 @@ class RunBrowser
             }
         }
         $javascriptPath = PathHelper::getAbsoluteFilename(ROOT_PATH . '/javascript/browser/browser.js');
-
         $output = trim(shell_exec($nodePath . ' ' . escapeshellarg($javascriptPath)));
         try {
             $data = json_decode($output);
         } catch (\Exception $e) {
             throw new \Exception('Parse output failed');
         }
-
         if (count($data->console) > 0) {
             foreach ($data->console as $console) {
                 $type = 'info';
@@ -49,7 +47,6 @@ class RunBrowser
                 Logger::$type("{$console->count} * Console: [{$console->text}] first occurred on {$console->device} at {$console->url}");
             }
         }
-
         if (count($data->network) > 0) {
             foreach ($data->network as $request) {
                 $method = 'info';
@@ -59,9 +56,6 @@ class RunBrowser
                 Logger::$method("{$request->count} * Network request: {$request->status}, {$request->url} (Size: {$request->length})");
             }
         }
-
         Logger::info('Screenshot taken');
-
     }
-
 }

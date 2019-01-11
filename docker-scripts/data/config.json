@@ -1,0 +1,7 @@
+{
+  "host": "https://zblogphp.local/blog/",
+  "phpPath": "php",
+  "builtinServer": false,
+  "listenAddress": "127.0.0.1:46214",
+  "zbpPath": "/data/www/local/www/blog/"
+}

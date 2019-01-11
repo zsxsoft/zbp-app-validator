@@ -10,7 +10,6 @@ let finishedDevices = 0
 
 const queue = []
 const screenshotPath = path.join(config.tempPath, '/screenshot')
-
 if (!fs.existsSync(screenshotPath)) {
   fs.mkdirSync(screenshotPath)
 }
@@ -38,7 +37,7 @@ async function runBrowser () {
       runQueue()
     })
   }
-  console.log(`Loading ${device.name} with ${url}`)
+  process.stderr.write(`Loading ${device.name} with ${url}\n`)
   debug(`loading ${device.name} with ${url}`)
   const { viewport, userAgent } = device
 
@@ -79,7 +78,12 @@ async function runBrowser () {
     }
   })
   page.on('pageerror', (e) => {
-    console.log(e)
+    const type = 'error'
+    const text = e.message + '\n' + e.stack
+    if (process.send) {
+      process.send({type: 'console', data: {type, text, url, device: device.name}})
+    }
+    debug(`get error: ${type}: ${text}`)
   })
 
 

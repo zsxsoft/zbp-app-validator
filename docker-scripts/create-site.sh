@@ -26,7 +26,7 @@ mkdir /data/logs/nginx/${sitename}
 chown -R www-data:${sitename} /data/logs/nginx/${sitename}
 # Website
 mkdir ${data}
-mkdir -p ${data}/www ${data}/bin ${data}/dev ${data}/tmp ${data}/lib ${data}/etc/ ${data}/home/
+mkdir -p ${data}/www ${data}/www/blog ${data}/bin ${data}/dev ${data}/tmp ${data}/lib ${data}/etc/ ${data}/home/
 mkdir -p ${data}/usr/sbin/ ${data}/usr/share/zoneinfo/ ${data}/var/run/nscd/
 mkdir -p ${data}/var/lib/php/sessions
 cp -a /dev/zero /dev/urandom /dev/null ${data}/dev/
@@ -43,11 +43,18 @@ ln -s /data/www/${sitename}/www/ /www/${sitename}
 
 # Cert
 mkdir /data/certs/${sitename}
+echo "authorityKeyIdentifier=keyid,issuer
+basicConstraints=CA:FALSE
+keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = ${url}" > /data/certs/${sitename}/v3.ext
 openssl genrsa -out /data/certs/${sitename}/ssl-key.pem 2048
 openssl rsa -in /data/certs/${sitename}/ssl-key.pem -out /data/certs/${sitename}/ssl-key-unsecure.pem
 openssl req -newkey rsa:2048 -keyout /data/certs/${sitename}/ssl-key-unsecure.pem -out /data/certs/${sitename}/ssl-key.req -nodes -subj "/C=US/ST=Denial/L=Springfield/O=Dis/CN=${url}"
 
-HOME=${data}/home openssl x509 -req -in /data/certs/${sitename}/ssl-key.req -CA /data/certs/mitmproxy-ca-cert.pem -CAkey /data/certs/mitmproxy-ca.pem -CAcreateserial -days 10 -out /data/certs/${sitename}/ssl.pem
+HOME=${data}/home openssl x509 -req -in /data/certs/${sitename}/ssl-key.req -CA /data/certs/mitmproxy-ca-cert.pem -CAkey /data/certs/mitmproxy-ca.pem -CAcreateserial -days 10 -out /data/certs/${sitename}/ssl.pem -extfile /data/certs/${sitename}/v3.ext
 cat /data/certs/${sitename}/ssl.pem /data/certs/mitmproxy-ca-cert.pem > /data/certs/${sitename}/ssl-fullchain.pem
 mkdir -p ${data}/home/.pki/nssdb
 certutil -d ${data}/home/.pki/nssdb -N --empty-password
@@ -60,7 +67,7 @@ ln -s /data/certs ${data}/home/.mitmproxy
 bash -c "echo \"[${sitename}]
 user = ${sitename}
 group = ${sitename}
-listen = /var/run/php73-fpm-${sitename}.sock
+listen = /var/run/php72-fpm-${sitename}.sock
 listen.owner = www-data
 listen.group = www-data
 php_admin_value[disable_functions] = exec,passthru,shell_exec,system
@@ -71,7 +78,7 @@ pm.start_servers = 2
 pm.min_spare_servers = 1
 pm.max_spare_servers = 3
 chroot = /data/www/${sitename}
-chdir = /www\" > /etc/php/7.3/fpm/pool.d/${sitename}.conf"
+chdir = /www\" > /etc/php/7.2/fpm/pool.d/${sitename}.conf"
 bash -c "echo \"server {
     listen 80 default_server;
     listen 443 ssl http2 default_server;

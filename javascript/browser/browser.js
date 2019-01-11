@@ -1,6 +1,7 @@
 const path = require('path')
 const cp = require('child_process')
 const config = require('../shared/config')
+const crypto = require('crypto')
 
 const nightmare = cp.fork(path.join(__dirname, '/child-process'))
 
