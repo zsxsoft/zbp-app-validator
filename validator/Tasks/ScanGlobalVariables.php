@@ -86,7 +86,7 @@ class ScanGlobalVariables
             if (preg_match($regex, $name)) {
                 Logger::info('Tested ' . $class . ': ' . $name);
             } else {
-                Logger::error('Sub-standard ' . $class . ': ' . $name);
+                Logger::error('Illegal ' . $class . ': ' . $name);
             }
         }
 
