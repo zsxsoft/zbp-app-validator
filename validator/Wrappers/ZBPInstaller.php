@@ -98,7 +98,7 @@ class ZBPInstaller
                 $this->download();
             }
         }
-        Logger::info('Cleaning Environment');
+        Logger::info('Initializing environment');
         if ($this->isUsingGit()) {
             $version = ZBPInstaller::gitVersion();
             Logger::info("Using Git {$version}Z-BlogPHP");
@@ -109,7 +109,7 @@ class ZBPInstaller
 
         PathHelper::rcopy(PathHelper::getAbsoluteFilename(ROOT_PATH . '/resources/zb_users'), $this->webPath . '/zb_users');
 
-        Logger::info('Cleaned successfully');
+        Logger::info('Initialized');
     }
 
 }
