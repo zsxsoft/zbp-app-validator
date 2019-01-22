@@ -6,7 +6,7 @@
  * Time: 19:39
  */
 
-namespace Zsxsoft\AppValidator\Commands;
+namespace Zsxsoft\AppValidator\Commands\Scanner;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;

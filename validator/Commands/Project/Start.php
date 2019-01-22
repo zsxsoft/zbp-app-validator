@@ -6,7 +6,7 @@
  * Time: 16:46
  */
 
-namespace Zsxsoft\AppValidator\Commands;
+namespace Zsxsoft\AppValidator\Commands\Project;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -17,7 +17,7 @@ use Zsxsoft\AppValidator\Helpers\TempHelper;
 use Zsxsoft\AppValidator\Wrappers\ServerManager;
 use Zsxsoft\AppValidator\Wrappers\ZBPInstaller;
 
-class StartProject extends Command
+class Start extends Command
 {
 
     protected function configure()

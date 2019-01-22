@@ -4,9 +4,9 @@
  * User: sx
  * Date: 2017/10/23
  * Time: 19:39
- **/
+ */
 
-namespace Zsxsoft\AppValidator\Commands;
+namespace Zsxsoft\AppValidator\Commands\App;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -14,28 +14,35 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Zsxsoft\AppValidator\Helpers\Logger;
 use Zsxsoft\AppValidator\Helpers\TempHelper;
-use Zsxsoft\AppValidator\Tasks\ScanGlobalVariables;
 use Zsxsoft\AppValidator\Wrappers\ZBPWrapper;
 
-class EnableApp extends Command
+class Extract extends Command
 {
 
     protected function configure()
     {
         $this
-            ->setName('app:enable')
-            ->setDescription('Enable installed app')
+            ->setName('app:extract')
+            ->setDescription('Extract a app from .zba file')
             ->addArgument(
-                'appId',
+                'path',
                 InputArgument::REQUIRED,
-                'App ID'
+                'The Path of ZBA File'
             );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $appId = $input->getArgument("appId");
-        $app = ZBPWrapper::loadApp($appId);
-        ZBPWrapper::enablePlugin();
+        $appPath = $input->getArgument("path");
+        if (!file_exists($appPath)) {
+            Logger::error("$appPath not found or unreadable");
+            return;
+        }
+        $appId = ZBPWrapper::installApp($appPath);
+        if ($appId == false) {
+            Logger::error("Extract $appPath failed");
+            return;
+        }
+        Logger::info("Extracted $appId");
     }
 }

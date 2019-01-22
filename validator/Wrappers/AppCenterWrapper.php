@@ -100,4 +100,13 @@ class AppCenterWrapper
             return false;
         }
     }
+
+    protected function login()
+    {
+        $zbp = ZBPWrapper::getZbp();
+        $zbp->Config('AppCentre')->username = $this->config['username'];
+        $zbp->Config('AppCentre')->password = $this->config['password'];
+        $zbp->SaveConfig('AppCentre');
+        Logger::info("Login " . $this->config['username'] . ' successfully');
+    }
 }
