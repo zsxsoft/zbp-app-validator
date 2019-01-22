@@ -1,7 +1,7 @@
 #!/bin/bash
 service mysql stop
 chown -R mysql:mysql /var/lib/mysql /var/run/mysqld
-echo 'slow-query-log-file=/var/log/mysql/mysql-slow.log' >> /etc/mysql/mysql.conf.d/mysqld.cnf
+echo 'slow-query-log-file=/zbp-app-validator/tmp/mysql-slow.log' >> /etc/mysql/mysql.conf.d/mysqld.cnf
 service mysql start
 
 echo '127.0.0.1 zblogphp.local' >> /etc/hosts
@@ -9,6 +9,8 @@ mysql -u root --password=rootpassword --execute="create database userdb;"
 mysql -u root --password=rootpassword --execute="CREATE USER 'user'@'localhost' IDENTIFIED BY 'userpassword';"
 mysql -u root --password=rootpassword --execute="grant all privileges on userdb.* to user@localhost ;"
 mysql -u user --password=userpassword --default-character-set=utf8mb4 -Duserdb < /zbp-app-validator/docker-scripts/data/data.sql
+service mysql stop
+
 bash -c "echo \"gzip on;
 gzip_disable \\\"msie6\\\";
 gzip_vary on;

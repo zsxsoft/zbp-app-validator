@@ -14,16 +14,21 @@ RUN export NODEJS_HOST=https://nodejs.org/dist/; if [ "x$location" = "xchina" ];
     && apt-get -y install git curl wget iptables unzip sudo \
     && (echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list) \
     && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
-# Fonts (Chinese, wqy-microhei)
-    && apt-get install -y --force-yes --no-install-recommends fonts-noto fonts-wqy-microhei \
+# Fonts (Chinese)
+    && apt-get install -y --no-install-recommends fonts-noto \
 # nginx & PHP
     && LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php \
     && apt-get update \
-    && apt-get -y install nginx php7.2-fpm php7.2-gd php7.2-curl php7.2-mysql php7.2-cli php7.2-xml php7.2-json php7.2-mbstring php7.2-cli php7.2-sqlite3 php7.2-zip \
+    && apt-get -y install nginx php7.2-fpm php7.2-gd php7.2-curl php7.2-mysql php7.2-cli php7.2-xml php7.2-json php7.2-mbstring php7.2-cli php7.2-dev php7.2-sqlite3 php7.2-zip php-pear \
+    && pecl install uopz \
     && rm -rf /etc/nginx/sites-enabled/default \
     && curl https://getcomposer.org/installer | php -- --filename=composer \
     && chmod a+x composer \
     && mv composer /usr/local/bin/composer \
+    && (echo extension=uopz.so > /etc/php/7.2/mods-available/uopz.ini) \
+    && (echo extension=uopz.so > /etc/php/7.2/fpm/conf.d/uopz.ini) \
+    && (echo extension=uopz.so > /etc/php/7.2/cli/conf.d/uopz.ini) \
+    && rm -rf /tmp/pear \
 # Nodejs
     && apt-get -y install yarn \
     && wget "$NODEJS_HOST/$NODEJS_VERSION/node-$NODEJS_VERSION-linux-x64.tar.xz" -O/tmp/node.tar.xz \
@@ -38,14 +43,13 @@ RUN export NODEJS_HOST=https://nodejs.org/dist/; if [ "x$location" = "xchina" ];
     && apt-get -y install mysql-server \
     && mkdir /var/run/mysqld \
     && chown -R mysql:mysql /var/lib/mysql /var/run/mysqld \
-# strace & tshark
-    && apt-get -y install strace tshark \
 # mitmproxy
     && wget https://github.com/mitmproxy/mitmproxy/releases/download/v4.0.1/mitmproxy-4.0.1-linux.tar.gz -O/tmp/mitmproxy.tar.gz \
     && tar -C /usr/local/bin -xvf /tmp/mitmproxy.tar.gz \
     && chmod 0777 /usr/local/bin/mitmdump /usr/local/bin/mitmproxy /usr/local/bin/mitmweb \
     && sysctl -w net.ipv4.ip_forward=1 \
 # Clean rubbish
+    && apt-get -y remove php7.2-dev php-pear \
     && apt-get -y autoremove \
     && apt-get autoclean \
     && apt-get clean \
@@ -63,8 +67,7 @@ RUN fc-cache -fv
 COPY package.json yarn.lock composer.json composer.lock /zbp-app-validator/
 WORKDIR /zbp-app-validator/
 
-
-RUN if [ "x$location" = "xchina" ]; then composer config -g repo.packagist composer https://packagist.phpcomposer.com; fi; \
+RUN if [ "x$location" = "xchina" ]; then composer config -g repo.packagist composer https://packagist.phpcomposer.com; export NPM_CONFIG_REGISTRY=https://registry.npm.taobao.org; export ELECTRON_MIRROR=http://npm.taobao.org/mirrors/electron/; export PUPPETEER_DOWNLOAD_HOST=https://storage.googleapis.com.cnpmjs.org; fi; \
     yarn && yarn cache clean --force && composer install && composer clearcache
 
 COPY ./ /zbp-app-validator/
