@@ -74,6 +74,4 @@ RUN chmod 0777 /zbp-app-validator/docker-scripts/* \
 
 ENV HOME=/data/www/local/home
 
-VOLUME ["/var/lib/mysql/", "/data/www/local/www/"]
-EXPOSE 3000
-CMD ["/zbp-app-validator/docker-scripts/run.sh"]
+ENTRYPOINT ["/zbp-app-validator/docker-scripts/run.sh"]

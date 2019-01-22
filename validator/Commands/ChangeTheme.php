@@ -23,7 +23,7 @@ class ChangeTheme extends Command
     protected function configure()
     {
         $this
-            ->setName('theme:change')
+            ->setName('app:theme:change')
             ->setDescription('Change current theme to appId')
             ->addArgument(
                 'appId',
