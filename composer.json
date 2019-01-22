@@ -19,7 +19,11 @@
         "nikic/php-parser": "^3.1",
         "cocur/background-process": "^0.7.0",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.4.4",
-        "phpcompatibility/php-compatibility": "^9.1.0"
+        "phpcompatibility/php-compatibility": "^9.1.0",
+        "ext-simplexml": "*",
+        "ext-json": "*",
+        "ext-curl": "*",
+        "ext-mbstring": "*"
     },
     "autoload": {
         "psr-4": {
