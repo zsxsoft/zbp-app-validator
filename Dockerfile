@@ -15,7 +15,7 @@ RUN export NODEJS_HOST=https://nodejs.org/dist/; if [ "x$location" = "xchina" ];
     && (echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list) \
     && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
 # Fonts (Chinese)
-    && apt-get install -y --no-install-recommends fonts-noto \
+    && apt-get install -y --no-install-recommends fonts-noto fonts-noto-cjk fonts-noto-color-emoji \
 # nginx & PHP
     && LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php \
     && apt-get update \

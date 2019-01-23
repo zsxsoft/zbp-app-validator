@@ -42,7 +42,7 @@ class StartPipe
         $this->_startProcess('scan:phpcc', $appId);
 
         if ($type == 'theme') {
-            $this->_startProcess('app:login', $appId);
+            $this->_startProcess('app:login');
             $this->_startProcess('app:theme:change', $appId);
             $this->_startProcess('scan:code', $appId);
             $this->_startProcess('browser');
