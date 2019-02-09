@@ -6,7 +6,7 @@
  * Time: 19:39
  */
 
-namespace Zsxsoft\AppValidator\Commands;
+namespace Zsxsoft\AppValidator\Commands\Scanner;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -14,29 +14,25 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Zsxsoft\AppValidator\Helpers\Logger;
 use Zsxsoft\AppValidator\Helpers\TempHelper;
-use Zsxsoft\AppValidator\Tasks\PHPCompatibility as Task;
+use Zsxsoft\AppValidator\Tasks\ValidateW3C as Task;
 use Zsxsoft\AppValidator\Wrappers\ZBPWrapper;
 
-class PHPCompatibility extends Command
+class ValidateW3C extends Command
 {
 
     protected function configure()
     {
         $this
-            ->setName('scan:phpcc')
-            ->setDescription('Scan the code which is not compatible with defined PHP version')
-            ->addArgument(
-                'appId',
-                InputArgument::REQUIRED,
-                'App ID'
-            );
+            ->setName('scan:w3c')
+            ->setDescription('Validate W3C Standard for theme');
     }
 
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $appId = $input->getArgument("appId");
-        ZBPWrapper::loadApp($appId);
+        // $appId = $input->getArgument("appId");
+        // $app = ZBPWrapper::loadApp($appId);
+        // if ($app->type !== 'theme') return;
         (new Task())->run();
     }
 }

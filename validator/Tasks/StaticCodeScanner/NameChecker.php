@@ -36,9 +36,9 @@ class NameChecker extends \PhpParser\NodeVisitorAbstract
         $data = '';
         if (in_array($name, ['curl_init'])) {
             $type = 'curl';
-        } else if (in_array($name, ['eval'])) {
+        } else if (in_array($name, ['eval', 'assert', 'create_function'])) {
             $type = 'eval';
-        } else if (in_array($name, ['exec', 'system', 'popen', 'proc_open', 'passthru', 'shell_exec'])) {
+        } else if (in_array($name, ['exec', 'system', 'popen', 'proc_open', 'pcntl_exec', 'passthru', 'shell_exec'])) {
             $type = 'system';
             $data = $name;
         }

@@ -30,7 +30,7 @@ class StartPipe
         $process = new MeaningfulBackgroundProcess($this->_getCommandLine('server:start'));
         $process->run();
         if (preg_match('/\.g?zba$/', $appId)) {
-            $this->_startProcess('extract', $appId);
+            $this->_startProcess('app:extract', $appId);
             $appId = file_get_contents(TempHelper::getPath('/extracted'));
         }
 
@@ -42,7 +42,8 @@ class StartPipe
         $this->_startProcess('scan:phpcc', $appId);
 
         if ($type == 'theme') {
-            $this->_startProcess('theme:change', $appId);
+            $this->_startProcess('app:login');
+            $this->_startProcess('app:theme:change', $appId);
             $this->_startProcess('scan:code', $appId);
             $this->_startProcess('browser');
             $this->_startProcess('scan:w3c');

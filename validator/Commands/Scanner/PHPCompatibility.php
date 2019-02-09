@@ -6,7 +6,7 @@
  * Time: 19:39
  */
 
-namespace Zsxsoft\AppValidator\Commands;
+namespace Zsxsoft\AppValidator\Commands\Scanner;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -14,35 +14,29 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Zsxsoft\AppValidator\Helpers\Logger;
 use Zsxsoft\AppValidator\Helpers\TempHelper;
+use Zsxsoft\AppValidator\Tasks\PHPCompatibility as Task;
 use Zsxsoft\AppValidator\Wrappers\ZBPWrapper;
 
-class ExtractApp extends Command
+class PHPCompatibility extends Command
 {
 
     protected function configure()
     {
         $this
-            ->setName('extract')
-            ->setDescription('Extract a app from .zba file')
+            ->setName('scan:phpcc')
+            ->setDescription('Scan the code which is not compatible with defined PHP version')
             ->addArgument(
-                'path',
+                'appId',
                 InputArgument::REQUIRED,
-                'The Path of ZBA File'
+                'App ID'
             );
     }
 
+
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $appPath = $input->getArgument("path");
-        if (!file_exists($appPath)) {
-            Logger::error("$appPath not found or unreadable");
-            return;
-        }
-        $appId = ZBPWrapper::installApp($appPath);
-        if ($appId == false) {
-            Logger::error("Extract $appPath failed");
-            return;
-        }
-        Logger::info("Extracted $appId");
+        $appId = $input->getArgument("appId");
+        ZBPWrapper::loadApp($appId);
+        (new Task())->run();
     }
 }

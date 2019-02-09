@@ -107,7 +107,7 @@ bash -c "echo \"server {
     location ~ \.php\\\$ {
         try_files \\\$uri =404;
         fastcgi_split_path_info ^(.+\.php)(/.+)\\\$;
-        fastcgi_pass unix:/var/run/php72-fpm-${sitename}.sock;
+        fastcgi_pass unix:/var/run/php73-fpm-${sitename}.sock;
         fastcgi_index index.php;
         fastcgi_param DOCUMENT_ROOT  /www;
         fastcgi_param SCRIPT_FILENAME  /www\\\$fastcgi_script_name;
@@ -127,5 +127,3 @@ bash -c "echo \"server {
 ln -s /etc/nginx/sites-available/${sitename} /etc/nginx/sites-enabled/${sitename}
 
 # Certificate
-#service php7.1-fpm restart
-#service nginx restart

@@ -148,4 +148,5 @@ class ZBPWrapper
         $this->zbp->activeapps[] = $app->id;
         Logger::info("Enabled {$app->id}");
     }
+
 }

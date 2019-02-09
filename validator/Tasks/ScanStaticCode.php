@@ -81,6 +81,9 @@ class ScanStaticCode
                 if ($app->type === 'theme' && preg_match('/(template|compiled)\/.*php$/i', $this->_path)) {
                     return;
                 }
+                if (preg_match('/\.(js|css)$/i', $this->path)) {
+                    return;
+                }
                 Logger::warning('Maybe no CSRF protection in backend!');
                 Logger::warning($this->_path);
             }
