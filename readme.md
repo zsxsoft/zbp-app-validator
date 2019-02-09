@@ -38,7 +38,7 @@ git clone https://github.com/zsxsoft/zbp-app-validator
 cd zbp-app-validator
 # 中国大陆用户可加上『--build-arg="location=china"』以使用国内镜像源构建
 docker build . --tag=zbp-app-validator
-docker run --rm -it zbp-app-validator
+docker run --rm --privileged -it zbp-app-validator
 ```
 
 ### 客户端直接运行
