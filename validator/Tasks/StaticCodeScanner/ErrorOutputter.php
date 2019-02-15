@@ -36,4 +36,15 @@ class ErrorOutputter
         Logger::error("Calling {$item['data']} in {$this->path}, Line {$item['line']}");
     }
 
+    public function session_($item)
+    {
+        Logger::warn("Calling {$item['data']} in {$this->path}, Line {$item['line']}");
+
+        if ($item['data'] == 'session_write_close') {
+            Logger::warn('You\'d better use $zbp->EndSession() to replace it.');
+        } else {
+            Logger::warn('You\'d better use $zbp->StartSession() to replace it.');
+        }
+    }
+
 }
