@@ -41,6 +41,9 @@ class NameChecker extends \PhpParser\NodeVisitorAbstract
         } else if (in_array($name, ['exec', 'system', 'popen', 'proc_open', 'pcntl_exec', 'passthru', 'shell_exec'])) {
             $type = 'system';
             $data = $name;
+        } else if (in_array($name, ['session_start', 'session_write_close'])) {
+            $type = 'session';
+            $data = $name;
         }
 
         if ($type !== '') {
