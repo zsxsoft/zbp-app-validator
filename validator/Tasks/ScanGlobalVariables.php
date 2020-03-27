@@ -53,7 +53,7 @@ class ScanGlobalVariables
 
         $app = ZBPWrapper::getApp();
         Logger::info('Testing functions');
-        $regex = str_replace("!!", $app->id, "/^(activeplugin_|installplugin_|uninstallplugin_)!!$|^!!_|^!!$|_!!$|^!!\\|^zblogphp\\!!\\/si");
+        $regex = str_replace("!!", $app->id, "/^(activeplugin_|installplugin_|uninstallplugin_)!!$|^!!_|^!!$|_!!$|^!!\\\\|^zblogphp\\\\!!\\\\/si");
         //var_dump($diff);exit;
         foreach ($diff as $index => $name) {
             if (preg_match($regex, $name)) {
