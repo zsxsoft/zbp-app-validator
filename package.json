@@ -26,7 +26,7 @@
     "normalize.css": "^8.0.0",
     "puppeteer": "^1.11.0",
     "vue": "^2.5.16",
-    "xterm": "^3.2.0"
+    "xterm": "^3.10.1"
   },
   "devDependencies": {
     "electron-rebuild": "^1.7.3",
