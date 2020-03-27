@@ -41,7 +41,7 @@ class PHPCompatibility
         $output = substr($output, strpos($output, '(100%)') + 6);
 
         try {
-            $output = preg_replace('/\}Time: .+; Memory: .+$/i', '}', $output);
+            $output = preg_replace('/Time: .+; Memory: .+$/i', '', $output);
             $data = json_decode($output);
         } catch (\Exception $e) {
             throw new \Exception('Parse output failed');
