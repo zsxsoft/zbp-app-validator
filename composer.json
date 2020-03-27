@@ -29,5 +29,11 @@
         "psr-4": {
             "Zsxsoft\\AppValidator\\": "validator/"
         }
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://mirrors.aliyun.com/composer/"
+        }
     }
 }

@@ -10,7 +10,7 @@ fi
 chmod -R 0777 tmp
 chown -R mysql:mysql /var/lib/mysql /var/run/mysqld
 
-service php7.3-fpm start
+service php7.4-fpm start
 service nginx start
 service mysql start
 

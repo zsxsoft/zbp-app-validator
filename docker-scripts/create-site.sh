@@ -67,7 +67,7 @@ ln -s /data/certs ${data}/home/.mitmproxy
 bash -c "echo \"[${sitename}]
 user = ${sitename}
 group = ${sitename}
-listen = /var/run/php73-fpm-${sitename}.sock
+listen = /var/run/php74-fpm-${sitename}.sock
 listen.owner = www-data
 listen.group = www-data
 php_admin_value[disable_functions] = exec,passthru,shell_exec,system
@@ -78,7 +78,7 @@ pm.start_servers = 2
 pm.min_spare_servers = 1
 pm.max_spare_servers = 3
 chroot = /data/www/${sitename}
-chdir = /www\" > /etc/php/7.3/fpm/pool.d/${sitename}.conf"
+chdir = /www\" > /etc/php/7.4/fpm/pool.d/${sitename}.conf"
 bash -c "echo \"server {
     listen 80 default_server;
     listen 443 ssl http2 default_server;
@@ -107,7 +107,7 @@ bash -c "echo \"server {
     location ~ \.php\\\$ {
         try_files \\\$uri =404;
         fastcgi_split_path_info ^(.+\.php)(/.+)\\\$;
-        fastcgi_pass unix:/var/run/php73-fpm-${sitename}.sock;
+        fastcgi_pass unix:/var/run/php74-fpm-${sitename}.sock;
         fastcgi_index index.php;
         fastcgi_param DOCUMENT_ROOT  /www;
         fastcgi_param SCRIPT_FILENAME  /www\\\$fastcgi_script_name;
