@@ -105,10 +105,10 @@ class ZBPWrapper
         $this->zbp->template->SetPath($this->zbp->usersdir . 'cache/compiled/' . $this->app->id . '/');
         $this->zbp->BuildModule();
         $this->zbp->SaveCache();
-        \InstallPlugin($this->app->id);
+        $this->zbp->template->theme = $this->app->id;
+        $this->enableApp($this->app->id, 'theme');
         Logger::info('Compiling Theme..');
         // @TODO Maybe a ZBP's bug
-        $this->zbp->template->theme = $this->app->id;
         $this->zbp->CheckTemplate(false, true);
         Logger::info("Theme changed to {$this->app->id}");
     }
@@ -116,8 +116,7 @@ class ZBPWrapper
     protected function enablePlugin()
     {
         $this->installDependencies($this->app);
-        \EnablePlugin($this->app->id);
-        \InstallPlugin($this->app->id);
+        $this->enableApp($this->app->id, 'plugin');
         Logger::info("Enabled {$this->app->id}");
     }
 
@@ -141,12 +140,21 @@ class ZBPWrapper
         if (!$app) {
             return false;
         }
+        $this->enableApp($app->id, 'plugin');
         $this->installDependencies($app);
-        \EnablePlugin($app->id);
-        \InstallPlugin($this->app->id);
         // @TODO Maybe another ZBP Bug
         $this->zbp->activeapps[] = $app->id;
         Logger::info("Enabled {$app->id}");
+    }
+
+    protected function enableApp($appId, $type)
+    {
+        if ($type === 'plugin') {
+            \EnablePlugin($appId);
+        }
+        Logger::info("Calling InstallPlugin_" . $appId);
+        require_once $this->zbp->usersdir . $type . '/' . $appId . '/include.php';
+        \InstallPlugin($appId);
     }
 
 }
