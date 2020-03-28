@@ -18,7 +18,7 @@ RUN export NODEJS_HOST=https://nodejs.org/dist/; if [ "x$location" = "xchina" ];
     && apt-get install -y --no-install-recommends fonts-noto fonts-noto-cjk fonts-noto-color-emoji \
 # nginx & PHP
     && LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php \
-#    && if [ "x$location" = "xchina" ]; then echo "Changed Ubuntu source"; find /etc/apt/sources.list.d/ -type f -name "*.list" -exec  sed  -i.bak -r  's#deb(-src)?s*http(s)?://ppa.launchpad.net#deb1 http2://launchpad.proxy.ustclug.org#ig' {}; fi; \
+    && if [ "x$location" = "xchina" ]; then echo "Changed Ubuntu source"; find /etc/apt/sources.list.d/ -type f -name "*.list" -exec  sed  -i.bak -r  's#deb(-src)?\s*http(s)?://ppa.launchpad.net#deb\1 https://launchpad.proxy.ustclug.org#ig' {} \; ;fi \
     && apt-get update \
     && apt-get -y install nginx php7.4-fpm php7.4-gd php7.4-curl php7.4-mysql php7.4-cli php7.4-xml php7.4-json php7.4-mbstring php7.4-cli php7.4-dev php7.4-sqlite3 php7.4-zip php-pear \
     && pecl install uopz \
@@ -37,24 +37,26 @@ RUN export NODEJS_HOST=https://nodejs.org/dist/; if [ "x$location" = "xchina" ];
 # Java
     && apt-get -y install openjdk-8-jre \
 # Chromium
-    && apt-get -y install libnss3 libnss3-tools libasound2 libxss1 \
+    && apt-get -y install libgtk-3-0 libnss3 libnss3-tools libasound2 libxss1 \
 # MySQL
     && bash -c "debconf-set-selections <<< 'mysql-server mysql-server/root_password password rootpassword'" \
     && bash -c "debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password rootpassword'" \
     && apt-get -y install mysql-server \
     && mkdir /var/run/mysqld \
     && chown -R mysql:mysql /var/lib/mysql /var/run/mysqld \
-# mitmproxy
-    && wget https://github.com/mitmproxy/mitmproxy/releases/download/v4.0.1/mitmproxy-4.0.1-linux.tar.gz -O/tmp/mitmproxy.tar.gz \
-    && tar -C /usr/local/bin -xvf /tmp/mitmproxy.tar.gz \
-    && chmod 0777 /usr/local/bin/mitmdump /usr/local/bin/mitmproxy /usr/local/bin/mitmweb \
-    && sysctl -w net.ipv4.ip_forward=1 \
 # Clean rubbish
     && apt-get -y remove php7.4-dev php-pear \
     && apt-get -y autoremove \
     && apt-get autoclean \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/*
+
+COPY env/* /tmp/
+# mitmproxy
+RUN if [ ! -f /tmp/mitmproxy.tar.gz ]; then wget https://github.com/mitmproxy/mitmproxy/releases/download/v4.0.1/mitmproxy-4.0.1-linux.tar.gz -O/tmp/mitmproxy.tar.gz; fi\
+    && tar -C /usr/local/bin -xvf /tmp/mitmproxy.tar.gz \
+    && chmod 0777 /usr/local/bin/mitmdump /usr/local/bin/mitmproxy /usr/local/bin/mitmweb \
+    && sysctl -w net.ipv4.ip_forward=1
 
 RUN mkdir /data/certs \
     && ln -s /data/certs /root/.mitmproxy \
