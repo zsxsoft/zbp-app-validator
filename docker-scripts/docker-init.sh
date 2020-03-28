@@ -2,6 +2,7 @@
 service mysql stop
 chown -R mysql:mysql /var/lib/mysql /var/run/mysqld
 echo 'slow-query-log-file=/zbp-app-validator/tmp/mysql-slow.log' >> /etc/mysql/mysql.conf.d/mysqld.cnf
+echo 'opcache.enable=0' >> /etc/php/7.4/fpm/php.ini
 service mysql start
 
 echo '127.0.0.1 zblogphp.local' >> /etc/hosts
