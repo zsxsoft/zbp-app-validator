@@ -57,10 +57,10 @@ class ZBPWrapper
     {
         $zbp = $this->zbp;
         $app = $zbp->LoadApp('plugin', $appId);
-        if (is_null($app->id)) {
+        if (is_null($app->name)) {
             $app = $zbp->LoadApp('theme', $appId);
         }
-        if (is_null($app->id)) {
+        if (is_null($app->name)) {
             Logger::error("Load $appId failed!");
             exit;
         }
