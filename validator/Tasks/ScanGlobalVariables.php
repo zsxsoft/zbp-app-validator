@@ -50,7 +50,6 @@ class ScanGlobalVariables
      */
     public function checkFunctions($diff)
     {
-
         $app = ZBPWrapper::getApp();
         Logger::info('Testing functions');
         $regex = str_replace("!!", $app->id, "/^(activeplugin_|installplugin_|uninstallplugin_)!!$|^!!_|^!!$|_!!$|^!!\\\\|^zblogphp\\\\!!\\\\/si");
@@ -63,6 +62,41 @@ class ScanGlobalVariables
                 if ($ret = PHPHelper::getFunctionDescription($name)) {
                     Logger::error("In " . $ret->getFileName());
                     Logger::error("Line " . ($ret->getStartLine() - 1) . " To " . ($ret->getEndLine() - 1));
+                }
+            }
+        }
+    }
+
+    /**
+     * Check the name of API mods
+     */
+    public function checkApiModNames()
+    {
+        $app = ZBPWrapper::getApp();
+
+        if (!isset($GLOBALS['hooks']['Filter_Plugin_API_Add_Mod'])) {
+            return;
+        }
+
+        Logger::info('Testing API mod names');
+        call_user_func('ActivePlugin_'.$app->id);
+
+        foreach ($GLOBALS['hooks']['Filter_Plugin_API_Add_Mod'] as $fpname => &$fpsignal) {
+            $add_mods = $fpname();
+
+            foreach ($add_mods as $mod => $file) {
+                $mod = strtolower($mod);
+                $app_id = strtolower($app->id);
+
+                if (! is_string($mod)) {
+                    Logger::error("API mod name is not a string.");
+                    continue;
+                }
+
+                if (substr($mod, 0, strlen($app->id)) === $app_id) {
+                    Logger::info("Tested API mod name: $mod");
+                } else {
+                    Logger::error("Illegal API mod name: $mod");
                 }
             }
         }
@@ -157,5 +191,6 @@ class ScanGlobalVariables
         $this->checkDiff('functions');
         $this->checkDiff('constants');
         $this->checkDiff('classes');
+        $this->checkApiModNames();
     }
 }
