@@ -3652,10 +3652,10 @@ xtend@~3.0.0:
   resolved "http://registry.npm.taobao.org/xtend/download/xtend-3.0.0.tgz#5cce7407baf642cba7becda568111c493f59665a"
   integrity sha1-XM50B7r2Qsunvs2laBEcST9ZZlo=
 
-xterm@^3.2.0:
-  version "3.10.0"
-  resolved "http://registry.npm.taobao.org/xterm/download/xterm-3.10.0.tgz#2c3108d886b9cb4e2d7d4f1a05ce5be6758552de"
-  integrity sha1-LDEI2Ia5y04tfU8aBc5b5nWFUt4=
+xterm@^3.10.1:
+  version "3.10.1"
+  resolved "https://registry.yarnpkg.com/xterm/-/xterm-3.10.1.tgz#14accf92772e5a6728f317a3c209ba714b73c8b5"
+  integrity sha512-RHaUwJ8zwLiICu1QsXoxUHP+R2Pp8Rc8yVoNali/nKw3CVXwmXxT/4mgbk7U22psuNgOqLyI4Sg9nlQfYeTRQw==
 
 y18n@^3.2.1:
   version "3.2.1"
